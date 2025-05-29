@@ -1,6 +1,6 @@
-import Image from "next/image"
-import { Mail, Linkedin, Twitter } from "lucide-react"
-import Link from "next/link"
+import Image from "next/image";
+import { Mail, Linkedin, Twitter } from "lucide-react";
+import Link from "next/link";
 
 export default function AboutPage() {
   const teamMembers = [
@@ -52,17 +52,20 @@ export default function AboutPage() {
         email: "zahra@kharazm.com",
       },
     },
-  ]
+  ];
 
   return (
     <div className="flex flex-col min-h-screen w-full max-w-full overflow-x-hidden">
       {/* Hero Section */}
       <div className="relative w-full">
         <div
-          className="absolute left-0 right-0 top-0 -z-10 h-[400px] w-full bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('https://wss-sharif.com/_next/static/media/Rectangle.b911abb6.png')" }}
+          className="absolute left-0 right-0 top-0 -z-10 h-[350px] w-full bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage:
+              "url('https://wss-sharif.com/_next/static/media/Rectangle.b911abb6.png')",
+          }}
         ></div>
-        <div className="mx-auto max-w-[1200px] rounded-2xl bg-white shadow-[0px_30px_60px_0px_rgba(189,192,199,0.10)] mt-16 mb-16">
+        <div className="mx-auto max-w-[1200px] rounded-2xl bg-white shadow-[0px_30px_60px_0px_rgba(189,192,199,0.10)] mt-24 mb-16">
           <div className="flex max-w-[1199px] flex-col items-start justify-center gap-8 px-[72px] py-[60px]">
             <div className="flex flex-row items-start justify-between self-stretch lg:max-w-[1055px]">
               <div className="flex-col gap-2">
@@ -73,18 +76,22 @@ export default function AboutPage() {
                   درباره ما
                 </p>
                 <p className="flex items-center justify-center gap-[13px] pb-4 pt-10 text-lg leading-relaxed text-neutral-400">
-                  فروشگاه آنلاین خوارزم با هدف ارائه بهترین تجربه خرید آنلاین برای مشتریان ایرانی تأسیس شده است. ما با
-                  تمرکز بر کیفیت محصولات، قیمت‌های مناسب و خدمات پس از فروش عالی، تلاش می‌کنیم تا بهترین پلتفرم تجارت
-                  الکترونیک در ایران باشیم.
+                  فروشگاه آنلاین خوارزم با هدف ارائه بهترین تجربه خرید آنلاین
+                  برای مشتریان ایرانی تأسیس شده است. ما با تمرکز بر کیفیت
+                  محصولات، قیمت‌های مناسب و خدمات پس از فروش عالی، تلاش می‌کنیم
+                  تا بهترین پلتفرم تجارت الکترونیک در ایران باشیم.
                 </p>
                 <p className="flex items-center justify-center gap-[13px] py-4 text-lg leading-relaxed text-neutral-400">
-                  خوارزم در طول سال‌های فعالیت خود، توانسته است اعتماد هزاران مشتری را جلب کند و به یکی از پیشروان صنعت
-                  تجارت الکترونیک در کشور تبدیل شود. ما با همکاری نزدیک با فروشندگان معتبر و تولیدکنندگان مطرح، محصولاتی
-                  با کیفیت و اصالت تضمین شده ارائه می‌دهیم.
+                  خوارزم در طول سال‌های فعالیت خود، توانسته است اعتماد هزاران
+                  مشتری را جلب کند و به یکی از پیشروان صنعت تجارت الکترونیک در
+                  کشور تبدیل شود. ما با همکاری نزدیک با فروشندگان معتبر و
+                  تولیدکنندگان مطرح، محصولاتی با کیفیت و اصالت تضمین شده ارائه
+                  می‌دهیم.
                 </p>
                 <p className="flex items-center justify-center gap-[13px] py-4 text-lg leading-relaxed text-neutral-400">
-                  تیم ما متشکل از متخصصان با تجربه در زمینه‌های مختلف تجارت الکترونیک، فناوری اطلاعات و خدمات مشتری است
-                  که همگی با هدف مشترک ارائه بهترین خدمات به شما عزیزان تلاش می‌کنند.
+                  تیم ما متشکل از متخصصان با تجربه در زمینه‌های مختلف تجارت
+                  الکترونیک، فناوری اطلاعات و خدمات مشتری است که همگی با هدف
+                  مشترک ارائه بهترین خدمات به شما عزیزان تلاش می‌کنند.
                 </p>
               </div>
             </div>
@@ -100,37 +107,43 @@ export default function AboutPage() {
             <div className="bg-background p-8 rounded-lg shadow-sm">
               <h3 className="text-xl font-semibold mb-4">کیفیت</h3>
               <p className="text-muted-foreground">
-                ما تنها محصولات با کیفیت را ارائه می‌دهیم و اصالت تمامی کالاها را تضمین می‌کنیم.
+                ما تنها محصولات با کیفیت را ارائه می‌دهیم و اصالت تمامی کالاها
+                را تضمین می‌کنیم.
               </p>
             </div>
             <div className="bg-background p-8 rounded-lg shadow-sm">
               <h3 className="text-xl font-semibold mb-4">شفافیت</h3>
               <p className="text-muted-foreground">
-                ما به شفافیت در قیمت‌گذاری، اطلاعات محصولات و فرآیندهای کسب و کار باور داریم.
+                ما به شفافیت در قیمت‌گذاری، اطلاعات محصولات و فرآیندهای کسب و
+                کار باور داریم.
               </p>
             </div>
             <div className="bg-background p-8 rounded-lg shadow-sm">
               <h3 className="text-xl font-semibold mb-4">نوآوری</h3>
               <p className="text-muted-foreground">
-                ما همواره به دنبال راه‌های جدید برای بهبود تجربه خرید آنلاین و ارائه خدمات بهتر هستیم.
+                ما همواره به دنبال راه‌های جدید برای بهبود تجربه خرید آنلاین و
+                ارائه خدمات بهتر هستیم.
               </p>
             </div>
             <div className="bg-background p-8 rounded-lg shadow-sm">
               <h3 className="text-xl font-semibold mb-4">مشتری‌مداری</h3>
               <p className="text-muted-foreground">
-                رضایت مشتری اولویت اصلی ماست و تمام تلاش خود را برای ارائه بهترین خدمات به کار می‌گیریم.
+                رضایت مشتری اولویت اصلی ماست و تمام تلاش خود را برای ارائه
+                بهترین خدمات به کار می‌گیریم.
               </p>
             </div>
             <div className="bg-background p-8 rounded-lg shadow-sm">
               <h3 className="text-xl font-semibold mb-4">مسئولیت اجتماعی</h3>
               <p className="text-muted-foreground">
-                ما به مسئولیت خود در قبال جامعه و محیط زیست متعهد هستیم و از کسب و کارهای پایدار حمایت می‌کنیم.
+                ما به مسئولیت خود در قبال جامعه و محیط زیست متعهد هستیم و از کسب
+                و کارهای پایدار حمایت می‌کنیم.
               </p>
             </div>
             <div className="bg-background p-8 rounded-lg shadow-sm">
               <h3 className="text-xl font-semibold mb-4">همکاری</h3>
               <p className="text-muted-foreground">
-                ما با فروشندگان، تولیدکنندگان و شرکای تجاری خود روابط بلندمدت و مبتنی بر اعتماد متقابل ایجاد می‌کنیم.
+                ما با فروشندگان، تولیدکنندگان و شرکای تجاری خود روابط بلندمدت و
+                مبتنی بر اعتماد متقابل ایجاد می‌کنیم.
               </p>
             </div>
           </div>
@@ -143,24 +156,43 @@ export default function AboutPage() {
           <h2 className="text-3xl font-bold mb-12 text-center">تیم ما</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {teamMembers.map((member) => (
-              <div key={member.id} className="bg-background border rounded-lg overflow-hidden shadow-sm">
+              <div
+                key={member.id}
+                className="bg-background border rounded-lg overflow-hidden shadow-sm"
+              >
                 <div className="relative h-64 w-full">
-                  <Image src={member.image || "/placeholder.svg"} alt={member.name} fill className="object-cover" />
+                  <Image
+                    src={member.image || "/placeholder.svg"}
+                    alt={member.name}
+                    fill
+                    className="object-cover"
+                  />
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-1">{member.name}</h3>
                   <p className="text-primary mb-3">{member.position}</p>
-                  <p className="text-muted-foreground text-sm mb-4">{member.bio}</p>
+                  <p className="text-muted-foreground text-sm mb-4">
+                    {member.bio}
+                  </p>
                   <div className="flex space-x-3 space-x-reverse">
-                    <Link href={member.social.linkedin} className="text-muted-foreground hover:text-primary">
+                    <Link
+                      href={member.social.linkedin}
+                      className="text-muted-foreground hover:text-primary"
+                    >
                       <Linkedin className="h-5 w-5" />
                       <span className="sr-only">لینکدین</span>
                     </Link>
-                    <Link href={member.social.twitter} className="text-muted-foreground hover:text-primary">
+                    <Link
+                      href={member.social.twitter}
+                      className="text-muted-foreground hover:text-primary"
+                    >
                       <Twitter className="h-5 w-5" />
                       <span className="sr-only">توییتر</span>
                     </Link>
-                    <Link href={`mailto:${member.social.email}`} className="text-muted-foreground hover:text-primary">
+                    <Link
+                      href={`mailto:${member.social.email}`}
+                      className="text-muted-foreground hover:text-primary"
+                    >
                       <Mail className="h-5 w-5" />
                       <span className="sr-only">ایمیل</span>
                     </Link>
@@ -172,5 +204,5 @@ export default function AboutPage() {
         </div>
       </section>
     </div>
-  )
+  );
 }

@@ -58,15 +58,9 @@
   }
 }
 
-/* RTL specific styles */
 html[dir="rtl"] {
   text-align: right;
   font-feature-settings: "kern", "liga", "calt";
-}
-
-/* Additional styles for background images */
-.bg-gradient-overlay {
-  background: linear-gradient(to right, rgba(164, 94, 159, 0.8), rgba(124, 58, 237, 0.8));
 }
 
 .prose {

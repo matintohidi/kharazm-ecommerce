@@ -11,7 +11,7 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"gen:api": "node ./script/genApi.js",
+		"gen:api": "node ./scripts/genApi.js",
 		"ch": "yarn lint && yarn ts"
 	},
 	"dependencies": {
@@ -73,6 +73,7 @@
 		"@types/react-dom": "^19",
 		"eslint": "^9.27.0",
 		"eslint-plugin-react": "^7.37.5",
+		"eslint-plugin-unused-imports": "^4.1.4",
 		"globals": "^16.2.0",
 		"postcss": "^8.5.4",
 		"swagger-typescript-api": "^13.1.3",

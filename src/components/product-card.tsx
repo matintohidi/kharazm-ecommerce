@@ -4,7 +4,6 @@ import { formatPrice } from "@/lib/utils";
 import { Eye, Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
 interface Product {
   id: string;
   name: string;

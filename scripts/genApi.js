@@ -1,5 +1,4 @@
-import * as path from "node:path";
-import * as process from "node:process";
+import path from "path";
 import { generateApi } from "swagger-typescript-api";
 
 const output = path.resolve(process.cwd(), "./src/lib");

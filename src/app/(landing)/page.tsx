@@ -1,4 +1,3 @@
-import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { getFeaturedProducts } from "@/lib/products";
 import {

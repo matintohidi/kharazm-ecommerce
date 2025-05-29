@@ -1,25 +1,25 @@
-import { formatPrice } from "@/lib/utils"
-import { AddToCartButton } from "@/components/add-to-cart-button"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
-import { Eye, Heart } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
+import { formatPrice } from "@/lib/utils";
+import { AddToCartButton } from "@/components/add-to-cart-button";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Eye, Heart } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 interface Product {
-  id: string
-  name: string
-  description: string
-  price: number
-  originalPrice?: number
-  discount?: number
-  image?: string
-  category: string
-  rating: number
-  reviewCount: number
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  originalPrice?: number;
+  discount?: number;
+  image?: string;
+  category: string;
+  rating: number;
+  reviewCount: number;
 }
 
 interface ProductCardProps {
-  product: Product
+  product: Product;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
@@ -36,7 +36,9 @@ export function ProductCard({ product }: ProductCardProps) {
         </Link>
         <div className="absolute top-2 left-2 flex flex-col gap-2">
           {product.discount && product.discount > 0 && (
-            <span className="bg-red-500 text-white text-xs px-2 py-1 rounded">{product.discount}٪ تخفیف</span>
+            <span className="bg-primary text-white text-xs px-2 py-1 rounded">
+              {product.discount}٪ تخفیف
+            </span>
           )}
         </div>
         <div className="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -57,11 +59,15 @@ export function ProductCard({ product }: ProductCardProps) {
       </div>
       <CardContent className="p-4">
         <Link href={`/products/${product.id}`} className="hover:underline">
-          <h3 className="font-medium line-clamp-1 text-slate-800">{product.name}</h3>
+          <h3 className="font-medium line-clamp-1 text-slate-800">
+            {product.name}
+          </h3>
         </Link>
         <div className="mt-2">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-slate-800">{formatPrice(product.price)} تومان</span>
+            <span className="font-bold text-slate-800">
+              {formatPrice(product.price)} تومان
+            </span>
             {product.originalPrice && product.originalPrice > product.price && (
               <span className="text-sm text-muted-foreground line-through">
                 {formatPrice(product.originalPrice)} تومان
@@ -74,5 +80,5 @@ export function ProductCard({ product }: ProductCardProps) {
         <AddToCartButton product={product} />
       </CardFooter>
     </Card>
-  )
+  );
 }

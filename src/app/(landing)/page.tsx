@@ -98,15 +98,15 @@ export default async function Home() {
 
           <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:gap-8 text-center lg:text-right mt-8 lg:mt-0 lg:mr-8 xl:mr-16 flex-shrink-0 lg:min-w-[250px] xl:min-w-[300px]">
             {[
-              { number: "۱۰۰+", label: "دسته‌بندی محصولات" },
-              { number: "۵۰۰۰+", label: "مشتری راضی" },
-              { number: "۱۰۰۰+", label: "محصول متنوع" },
+              { number: "+۱۰۰", label: "دسته‌بندی محصولات" },
+              { number: "+۵۰۰۰", label: "مشتری راضی" },
+              { number: "+۱۰۰۰", label: "محصول متنوع" },
               { number: "۲۴/۷", label: "پشتیبانی آنلاین" },
-              { number: "۵+", label: "سال تجربه" },
-              { number: "۱۰۰+", label: "فروشنده معتبر" },
+              { number: "+۵", label: "سال تجربه" },
+              { number: "+۱۰۰", label: "فروشنده معتبر" },
             ].map((stat, index) => (
               <div key={index} className="flex-shrink-0">
-                <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight tracking-tight text-white">
+                <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight tracking-tight text-white text-reve">
                   {stat.number}
                 </p>
                 <p className="text-white/80 text-xs sm:text-sm lg:text-base mt-1">
@@ -158,13 +158,13 @@ export default async function Home() {
                     />
 
                     {product.discount && product.discount > 0 && (
-                      <div className="absolute top-4 left-4 bg-red-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-lg">
-                        {product.discount}٪ تخفیف
+                      <div className="absolute top-4 left-4 bg-primary text-white text-sm font-bold px-3 py-1 rounded-full shadow-lg">
+                        {product.discount.toLocaleString("fa-IR")}٪ تخفیف
                       </div>
                     )}
 
                     <div className="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <button className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-colors">
+                      <button className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-colors cursor-move">
                         <Star className="h-4 w-4 text-slate-800" />
                       </button>
                     </div>
@@ -207,8 +207,6 @@ export default async function Home() {
                           )}
                       </div>
                     </div>
-
-                    <ProductCard product={product} />
                   </div>
                 </div>
               </div>

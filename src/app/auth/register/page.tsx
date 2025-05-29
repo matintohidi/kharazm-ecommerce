@@ -1,106 +1,71 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useToast } from "@/hooks/use-toast"
-import { Mail } from "lucide-react"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
+import { Mail } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function RegisterPage() {
-  const { toast } = useToast()
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
-  const [isGoogleLoading, setIsGoogleLoading] = useState(false)
+  const { toast } = useToast();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
+    e.preventDefault();
+    setIsLoading(true);
 
     // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
     toast({
       title: "ثبت‌نام موفقیت‌آمیز",
       description: "حساب کاربری شما با موفقیت ایجاد شد.",
-    })
+    });
 
-    router.push("/account")
-  }
+    router.push("/account");
+  };
 
   const handleGoogleSignup = async () => {
-    setIsGoogleLoading(true)
+    setIsGoogleLoading(true);
 
     // Simulate Google OAuth
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
     toast({
       title: "ثبت‌نام با گوگل موفقیت‌آمیز",
       description: "حساب کاربری شما با موفقیت ایجاد شد.",
-    })
+    });
 
-    router.push("/account")
-  }
+    router.push("/account");
+  };
 
   return (
     <div className="h-screen flex overflow-hidden">
-      {/* Visual Section - 60% on desktop */}
-      <div className="hidden lg:flex lg:w-[60%] relative">
-        <div
-          className="w-full bg-cover bg-center bg-no-repeat relative"
-          style={{ backgroundImage: "url('https://wss-sharif.com/_next/static/media/Rectangle.b911abb6.png')" }}
-        >
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-black/50"></div>
-
-          {/* Content */}
-          <div className="relative z-10 flex flex-col justify-center items-center h-full text-white px-8">
-            <div className="max-w-md text-center">
-              <h1 className="text-4xl xl:text-5xl font-bold mb-4">عضو خانواده شوید</h1>
-              <p className="text-lg xl:text-xl mb-8 leading-relaxed opacity-90">
-                با ایجاد حساب کاربری در خوارزم، از تخفیف‌های ویژه و خدمات منحصر به فرد ما بهره‌مند شوید.
-              </p>
-              <div className="grid grid-cols-2 gap-6 text-center">
-                <div>
-                  <div className="text-2xl xl:text-3xl font-bold mb-1">رایگان</div>
-                  <div className="text-white/80 text-sm">عضویت</div>
-                </div>
-                <div>
-                  <div className="text-2xl xl:text-3xl font-bold mb-1">سریع</div>
-                  <div className="text-white/80 text-sm">ارسال</div>
-                </div>
-                <div>
-                  <div className="text-2xl xl:text-3xl font-bold mb-1">امن</div>
-                  <div className="text-white/80 text-sm">پرداخت</div>
-                </div>
-                <div>
-                  <div className="text-2xl xl:text-3xl font-bold mb-1">ویژه</div>
-                  <div className="text-white/80 text-sm">تخفیف‌ها</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Form Section - 40% on desktop, full width on mobile */}
       <div className="w-full lg:w-[40%] flex items-center justify-center bg-gray-50">
         <div className="w-full max-w-sm px-6 lg:px-8">
           <div className="text-center mb-6">
             <Link href="/" className="inline-block mb-4">
-              <div className="text-2xl lg:text-3xl font-bold text-primary">خوارزم</div>
+              <div className="text-2xl lg:text-3xl font-bold text-primary">
+                خوارزم
+              </div>
             </Link>
-            <h2 className="text-xl lg:text-2xl font-bold text-slate-800 mb-1">ایجاد حساب کاربری</h2>
-            <p className="text-sm text-slate-800">برای خرید از فروشگاه خوارزم ثبت‌نام کنید</p>
+            <h2 className="text-xl lg:text-2xl font-bold text-slate-800 mb-1">
+              ایجاد حساب کاربری
+            </h2>
+            <p className="text-sm text-slate-800">
+              برای خرید از فروشگاه خوارزم ثبت‌نام کنید
+            </p>
           </div>
 
           <div className="bg-white rounded-xl shadow-lg p-6">
-            {/* Google Signup Button */}
             <Button
               onClick={handleGoogleSignup}
               disabled={isGoogleLoading}
@@ -111,7 +76,6 @@ export default function RegisterPage() {
               {isGoogleLoading ? "در حال ثبت‌نام..." : "ثبت‌نام با Gmail"}
             </Button>
 
-            {/* Divider */}
             <div className="relative mb-4">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-200"></div>
@@ -121,7 +85,6 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            {/* Registration Form */}
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-1">
                 <Label htmlFor="username" className="text-slate-800 text-sm">
@@ -180,7 +143,10 @@ export default function RegisterPage() {
             <div className="mt-6 text-center">
               <p className="text-sm text-slate-800">
                 قبلاً ثبت‌نام کرده‌اید؟{" "}
-                <Link href="/auth/login" className="text-primary hover:underline font-medium">
+                <Link
+                  href="/auth/login"
+                  className="text-primary hover:underline font-medium"
+                >
                   وارد شوید
                 </Link>
               </p>
@@ -188,6 +154,54 @@ export default function RegisterPage() {
           </div>
         </div>
       </div>
+
+      <div className="hidden lg:flex lg:w-[60%] relative">
+        <div
+          className="w-full bg-cover bg-center bg-no-repeat relative"
+          style={{
+            backgroundImage:
+              "url('https://wss-sharif.com/_next/static/media/Rectangle.b911abb6.png')",
+          }}
+        >
+          <div className="absolute inset-0 bg-black/50"></div>
+
+          <div className="relative z-10 flex flex-col justify-center items-center h-full text-white px-8">
+            <div className="max-w-md text-center">
+              <h1 className="text-4xl xl:text-5xl font-bold mb-4">
+                عضو خانواده شوید
+              </h1>
+              <p className="text-lg xl:text-xl mb-8 leading-relaxed opacity-90">
+                با ایجاد حساب کاربری در خوارزم، از تخفیف‌های ویژه و خدمات منحصر
+                به فرد ما بهره‌مند شوید.
+              </p>
+              <div className="grid grid-cols-2 gap-6 text-center">
+                <div>
+                  <div className="text-2xl xl:text-3xl font-bold mb-1">
+                    رایگان
+                  </div>
+                  <div className="text-white/80 text-sm">عضویت</div>
+                </div>
+                <div>
+                  <div className="text-2xl xl:text-3xl font-bold mb-1">
+                    سریع
+                  </div>
+                  <div className="text-white/80 text-sm">ارسال</div>
+                </div>
+                <div>
+                  <div className="text-2xl xl:text-3xl font-bold mb-1">امن</div>
+                  <div className="text-white/80 text-sm">پرداخت</div>
+                </div>
+                <div>
+                  <div className="text-2xl xl:text-3xl font-bold mb-1">
+                    ویژه
+                  </div>
+                  <div className="text-white/80 text-sm">تخفیف‌ها</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  )
+  );
 }

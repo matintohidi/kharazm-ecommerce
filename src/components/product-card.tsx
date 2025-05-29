@@ -1,6 +1,6 @@
-import { formatPrice } from "@/lib/utils";
 import { AddToCartButton } from "@/components/add-to-cart-button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { formatPrice } from "@/lib/utils";
 import { Eye, Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -35,11 +35,11 @@ export function ProductCard({ product }: ProductCardProps) {
           />
         </Link>
         <div className="absolute top-2 left-2 flex flex-col gap-2">
-          {product.discount && product.discount > 0 && (
-            <span className="bg-primary text-white text-xs px-2 py-1 rounded">
-              {product.discount}٪ تخفیف
+          {product.discount && product.discount > 0 ? (
+            <span className="bg-red-400 text-white text-xs px-2 py-1 rounded-2xl">
+              {product.discount.toLocaleString("fa-IR")}٪ تخفیف
             </span>
-          )}
+          ) : null}
         </div>
         <div className="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
           <button

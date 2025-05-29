@@ -110,7 +110,7 @@ export default function Header() {
                 )}
               ></div>
             </button>
-            <Link href="/" className="flex-shrink-0">
+            <Link href="/" className="shrink-0">
               <div
                 className={cn(
                   "text-lg sm:text-xl lg:text-2xl font-bold transition-colors duration-200",

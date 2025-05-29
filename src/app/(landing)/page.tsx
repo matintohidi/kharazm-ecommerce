@@ -37,13 +37,13 @@ export default async function Home() {
               </p>
               <div className="flex flex-col gap-3 sm:gap-4 lg:flex-col">
                 <div className="flex items-center gap-2 lg:gap-3">
-                  <MapPin className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 flex-shrink-0" />
+                  <MapPin className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 shrink-0" />
                   <p className="font-normal text-white/80 text-sm sm:text-base lg:text-xl">
                     تهران، ایران - سراسر کشور
                   </p>
                 </div>
                 <div className="flex items-center gap-2 lg:gap-3">
-                  <Calendar className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 flex-shrink-0" />
+                  <Calendar className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 shrink-0" />
                   <p className="font-normal text-white/80 text-sm sm:text-base lg:text-xl">
                     ۲۴ ساعته، ۷ روز هفته
                   </p>
@@ -52,7 +52,7 @@ export default async function Home() {
             </div>
 
             <div className="flex items-center justify-center lg:justify-start gap-2 sm:gap-4 lg:gap-[52px] font-bold text-white mt-6 sm:mt-8 lg:mt-[52px] mb-8 sm:mb-12 lg:mb-16 text-base sm:text-2xl lg:text-5xl tracking-tight lg:tracking-[-0.96px] overflow-x-auto">
-              <div className="flex flex-col items-center gap-1 lg:gap-3 flex-shrink-0">
+              <div className="flex flex-col items-center gap-1 lg:gap-3 shrink-0">
                 <div className="flex items-center justify-center rounded-lg border border-white/30 px-2 sm:px-3 lg:px-4 py-1 sm:py-2 lg:py-3 tabular-nums min-w-[35px] sm:min-w-[45px] lg:min-w-[60px]">
                   00
                 </div>
@@ -60,10 +60,10 @@ export default async function Home() {
                   روز
                 </p>
               </div>
-              <div className="font-bold text-white text-base sm:text-2xl lg:text-5xl flex-shrink-0">
+              <div className="font-bold text-white text-base sm:text-2xl lg:text-5xl shrink-0">
                 :
               </div>
-              <div className="flex flex-col items-center gap-1 lg:gap-3 flex-shrink-0">
+              <div className="flex flex-col items-center gap-1 lg:gap-3 shrink-0">
                 <div className="flex items-center justify-center rounded-lg border border-white/30 px-2 sm:px-3 lg:px-4 py-1 sm:py-2 lg:py-3 tabular-nums min-w-[35px] sm:min-w-[45px] lg:min-w-[60px]">
                   00
                 </div>
@@ -71,10 +71,10 @@ export default async function Home() {
                   ساعت
                 </p>
               </div>
-              <div className="font-bold text-white text-base sm:text-2xl lg:text-5xl flex-shrink-0">
+              <div className="font-bold text-white text-base sm:text-2xl lg:text-5xl shrink-0">
                 :
               </div>
-              <div className="flex flex-col items-center gap-1 lg:gap-3 flex-shrink-0">
+              <div className="flex flex-col items-center gap-1 lg:gap-3 shrink-0">
                 <div className="flex items-center justify-center rounded-lg border border-white/30 px-2 sm:px-3 lg:px-4 py-1 sm:py-2 lg:py-3 tabular-nums min-w-[35px] sm:min-w-[45px] lg:min-w-[60px]">
                   00
                 </div>
@@ -82,10 +82,10 @@ export default async function Home() {
                   دقیقه
                 </p>
               </div>
-              <div className="font-bold text-white text-base sm:text-2xl lg:text-5xl flex-shrink-0">
+              <div className="font-bold text-white text-base sm:text-2xl lg:text-5xl shrink-0">
                 :
               </div>
-              <div className="flex flex-col items-center gap-1 lg:gap-3 flex-shrink-0">
+              <div className="flex flex-col items-center gap-1 lg:gap-3 shrink-0">
                 <div className="flex items-center justify-center rounded-lg border border-white/30 px-2 sm:px-3 lg:px-4 py-1 sm:py-2 lg:py-3 tabular-nums min-w-[35px] sm:min-w-[45px] lg:min-w-[60px]">
                   00
                 </div>
@@ -96,7 +96,7 @@ export default async function Home() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:gap-8 text-center lg:text-right mt-8 lg:mt-0 lg:mr-8 xl:mr-16 flex-shrink-0 lg:min-w-[250px] xl:min-w-[300px]">
+          <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:gap-8 text-center lg:text-right mt-8 lg:mt-0 lg:mr-8 xl:mr-16 shrink-0 lg:min-w-[250px] xl:min-w-[300px]">
             {[
               { number: "+۱۰۰", label: "دسته‌بندی محصولات" },
               { number: "+۵۰۰۰", label: "مشتری راضی" },
@@ -105,7 +105,7 @@ export default async function Home() {
               { number: "+۵", label: "سال تجربه" },
               { number: "+۱۰۰", label: "فروشنده معتبر" },
             ].map((stat, index) => (
-              <div key={index} className="flex-shrink-0">
+              <div key={index} className="shrink-0">
                 <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight tracking-tight text-white text-reve">
                   {stat.number}
                 </p>
@@ -118,7 +118,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="py-16 lg:py-24 bg-gradient-to-br from-gray-50 via-white to-blue-50/30 relative overflow-hidden">
+      <section className="py-16 lg:py-24 bg-linear-to-br from-gray-50 via-white to-blue-50/30 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-72 h-72 bg-primary/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
 
@@ -128,7 +128,7 @@ export default async function Home() {
               <Sparkles className="h-4 w-4" />
               محصولات ویژه
             </div>
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
+            <h2 className="text-4xl lg:text-5xl font-bold mb-6 bg-linear-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
               بهترین انتخاب‌های امروز
             </h2>
             <p className="text-lg text-slate-800 max-w-2xl mx-auto leading-relaxed">
@@ -147,7 +147,7 @@ export default async function Home() {
                 }}
               >
                 <div className="relative bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden border border-gray-100 group-hover:border-primary/20">
-                  <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
+                  <div className="relative aspect-square overflow-hidden bg-linear-to-br from-gray-50 to-gray-100">
                     <Image
                       src={
                         product.image || "/placeholder.svg?height=400&width=400"
@@ -169,7 +169,7 @@ export default async function Home() {
                       </button>
                     </div>
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
 
                   <div className="p-6">
@@ -230,7 +230,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="py-16 lg:py-20 bg-gradient-to-r from-primary/5 via-blue-50/50 to-primary/5 relative">
+      <section className="py-16 lg:py-20 bg-linear-to-r from-primary/5 via-blue-50/50 to-primary/5 relative">
         <div className="absolute inset-0 bg-[url('/placeholder.svg?height=100&width=100&text=pattern')] opacity-5"></div>
         <div className="container mx-auto px-4 md:px-6 relative">
           <div className="max-w-4xl mx-auto text-center">

@@ -1,26 +1,26 @@
-import { Button } from "@/components/ui/button"
-import { getProductById, getRelatedProducts } from "@/lib/products"
-import { AddToCartButton } from "@/components/add-to-cart-button"
-import { ProductCard } from "@/components/product-card"
-import { formatPrice } from "@/lib/utils"
-import { Truck, ShieldCheck, RotateCcw, Star } from "lucide-react"
-import Image from "next/image"
-import { notFound } from "next/navigation"
+import { Button } from "@/components/ui/button";
+import { getProductById, getRelatedProducts } from "@/lib/products";
+import { AddToCartButton } from "@/components/add-to-cart-button";
+import { ProductCard } from "@/components/product-card";
+import { formatPrice } from "@/lib/utils";
+import { Truck, ShieldCheck, RotateCcw, Star } from "lucide-react";
+import Image from "next/image";
+import { notFound } from "next/navigation";
 
 interface ProductPageProps {
   params: {
-    id: string
-  }
+    id: string;
+  };
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
-  const product = await getProductById(params.id)
+  const product = await getProductById(params.id);
 
   if (!product) {
-    notFound()
+    notFound();
   }
 
-  const relatedProducts = await getRelatedProducts(product.category)
+  const relatedProducts = await getRelatedProducts(product.category);
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
@@ -44,21 +44,31 @@ export default async function ProductPage({ params }: ProductPageProps) {
               {[...Array(5)].map((_, i) => (
                 <Star
                   key={i}
-                  className={`h-4 w-4 ${i < product.rating ? "text-yellow-400 fill-yellow-400" : "text-gray-300"}`}
+                  className={`h-4 w-4 ${
+                    i < product.rating
+                      ? "text-yellow-400 fill-yellow-400"
+                      : "text-gray-300"
+                  }`}
                 />
               ))}
             </div>
-            <span className="text-sm text-muted-foreground">({product.reviewCount} نظر)</span>
+            <span className="text-sm text-muted-foreground">
+              ({product.reviewCount} نظر)
+            </span>
           </div>
 
-          <div className="text-2xl font-bold mb-6">{formatPrice(product.price)} تومان</div>
+          <div className="text-2xl font-bold mb-6">
+            {formatPrice(product.price)} تومان
+          </div>
 
           {product.discount > 0 && (
             <div className="flex items-center gap-2 mb-4">
               <span className="text-sm line-through text-muted-foreground">
                 {formatPrice(product.originalPrice)} تومان
               </span>
-              <span className="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">{product.discount}٪ تخفیف</span>
+              <span className="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">
+                {product.discount}٪ تخفیف
+              </span>
             </div>
           )}
 
@@ -132,5 +142,5 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -2,11 +2,17 @@
 	"name": "kharazm-ecommerce",
 	"version": "0.1.0",
 	"private": true,
+	"main": "index.js",
+	"repository": "https://github.com/matintohidi/kharazm-ecommerce.git",
+	"author": "matintohidi <matintovhidi@gmail.com>",
+	"license": "MIT",
 	"scripts": {
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint"
+		"lint": "next lint",
+		"gen:api": "node ./script/genApi.js",
+		"ch": "yarn lint && yarn ts"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^3.9.1",
@@ -60,11 +66,16 @@
 		"zod": "^3.24.1"
 	},
 	"devDependencies": {
+		"@eslint/js": "^9.27.0",
 		"@types/node": "^22",
 		"@types/react": "^19",
 		"@types/react-dom": "^19",
+		"eslint": "^9.27.0",
+		"eslint-plugin-react": "^7.37.5",
+		"globals": "^16.2.0",
 		"postcss": "^8",
 		"tailwindcss": "^3.4.17",
-		"typescript": "^5"
+		"typescript": "^5",
+		"typescript-eslint": "^8.33.0"
 	}
 }

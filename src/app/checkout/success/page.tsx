@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button"
-import { CheckCircle } from "lucide-react"
-import Link from "next/link"
+import { Button } from "@/components/ui/button";
+import { CheckCircle } from "lucide-react";
+import Link from "next/link";
 
 export default function CheckoutSuccessPage() {
   return (
@@ -11,8 +11,8 @@ export default function CheckoutSuccessPage() {
         </div>
         <h1 className="text-3xl font-bold mb-4">سفارش شما با موفقیت ثبت شد</h1>
         <p className="text-muted-foreground mb-8">
-          از خرید شما متشکریم. سفارش شما با موفقیت ثبت شد و در حال پردازش است. شماره سفارش شما:{" "}
-          <span className="font-medium">KHW-12345</span>
+          از خرید شما متشکریم. سفارش شما با موفقیت ثبت شد و در حال پردازش است.
+          شماره سفارش شما: <span className="font-medium">KHW-12345</span>
         </p>
         <div className="space-y-4">
           <Button asChild className="w-full">
@@ -24,5 +24,5 @@ export default function CheckoutSuccessPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,7 +1,7 @@
 "use client";
 import { useCart } from "@/components/cart-provider";
 import { cn } from "@/lib/utils";
-import { MapPin, Calendar, X, Sun, Moon, ShoppingCart } from "lucide-react";
+import { X, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -91,7 +91,6 @@ export default function Header() {
               onClick={toggleMobileMenu}
               aria-label="منوی اصلی"
             >
-              <span className="sr-only">Open main menu</span>
               <div
                 className={cn(
                   "h-0.5 rounded-full bg-current transition-transform duration-200",
@@ -115,7 +114,9 @@ export default function Header() {
               <div
                 className={cn(
                   "text-lg sm:text-xl lg:text-2xl font-bold transition-colors duration-200",
-                  isTransparent ? "text-white" : "text-primary"
+                  isTransparent && isHaveBackgroundPage
+                    ? "text-white"
+                    : "text-primary"
                 )}
               >
                 خوارزم
@@ -131,10 +132,10 @@ export default function Header() {
                 className={cn(
                   "block px-3 lg:px-4 py-2 lg:py-3 transition-all duration-200 text-sm lg:text-base font-medium",
                   pathname === item.href
-                    ? isTransparent
+                    ? isTransparent && isHaveBackgroundPage
                       ? "text-white bg-white/20 rounded-md"
                       : "text-primary bg-primary/10 rounded-md"
-                    : isTransparent
+                    : isTransparent && isHaveBackgroundPage
                     ? "text-white/90 hover:text-white hover:bg-white/10 rounded-md"
                     : "text-slate-800 hover:text-primary hover:bg-primary/5 rounded-md"
                 )}
@@ -148,7 +149,7 @@ export default function Header() {
               href="/cart"
               className={cn(
                 "relative flex items-center justify-center w-8 h-8 lg:w-10 lg:h-10 rounded-md transition-all duration-200",
-                isTransparent
+                isTransparent && isHaveBackgroundPage
                   ? "border border-white/30 text-white hover:bg-white/10"
                   : "border border-gray-300 text-slate-800 hover:bg-gray-50"
               )}
@@ -166,7 +167,7 @@ export default function Header() {
                 href="/auth/register"
                 className={cn(
                   "flex items-center rounded-md px-3 lg:px-6 text-xs lg:text-base font-semibold h-8 lg:h-12 transition-all duration-200",
-                  isTransparent
+                  isTransparent && isHaveBackgroundPage
                     ? "bg-white text-slate-800 hover:bg-gray-50"
                     : "bg-primary text-white hover:bg-primary/90"
                 )}
@@ -177,7 +178,7 @@ export default function Header() {
                 href="/auth/login"
                 className={cn(
                   "flex items-center rounded-md border px-3 lg:px-6 text-xs lg:text-base font-semibold h-8 lg:h-12 transition-all duration-200",
-                  isTransparent
+                  isTransparent && isHaveBackgroundPage
                     ? "border-white/30 text-white hover:bg-white/10"
                     : "border-gray-300 text-slate-800 hover:bg-gray-50"
                 )}

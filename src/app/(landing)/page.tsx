@@ -1,7 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { getFeaturedProducts } from "@/lib/products";
 import {
-  Star,
   ArrowLeft,
   Sparkles,
   TrendingUp,
@@ -9,11 +7,22 @@ import {
   Calendar,
 } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
-import { AddToCartButton } from "@/components/add-to-cart-button";
+import { Api } from "@/lib/api";
+import { Product } from "@/lib/services";
+import { BestProductCard } from "@/app/(landing)/components/bestProductCard";
+
+async function getBestProducts() {
+  const res = await Api.products.productsList({
+    next: {
+      revalidate: 3 * 60 * 60,
+    },
+  });
+
+  return res.json();
+}
 
 export default async function Home() {
-  const featuredProducts = await getFeaturedProducts();
+  const featuredProducts: Product[] = await getBestProducts();
 
   return (
     <main className="flex-1">
@@ -128,7 +137,7 @@ export default async function Home() {
               <Sparkles className="h-4 w-4" />
               محصولات ویژه
             </div>
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6 bg-linear-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
+            <h2 className="text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent leading-tight">
               بهترین انتخاب‌های امروز
             </h2>
             <p className="text-lg text-slate-800 max-w-2xl mx-auto leading-relaxed">
@@ -138,80 +147,8 @@ export default async function Home() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-12">
-            {featuredProducts.map((product, index) => (
-              <Link
-                href={`/products/${product.id}`}
-                key={product.id}
-                className="group relative"
-                style={{
-                  animationDelay: `${index * 100}ms`,
-                }}
-              >
-                <div className="min-h-[480px] flex flex-col bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden border border-gray-100 group-hover:border-primary/20">
-                  <div className="relative aspect-square overflow-hidden bg-linear-to-br from-gray-50 to-gray-100">
-                    <Image
-                      src={
-                        product.image || "/placeholder.svg?height=400&width=400"
-                      }
-                      alt={product.name}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-
-                    {product.discount && product.discount > 0 && (
-                      <div className="absolute top-4 left-4 bg-primary text-white text-sm font-bold px-3 py-1 rounded-full shadow-lg">
-                        {product.discount.toLocaleString("fa-IR")}٪ تخفیف
-                      </div>
-                    )}
-
-                    <div className="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <button className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-colors cursor-pointer">
-                        <Star className="h-4 w-4 text-slate-800" />
-                      </button>
-                    </div>
-
-                    <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  </div>
-
-                  <div className="flex-1 flex flex-col p-6">
-                    <div className="flex items-center gap-1 mb-2">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className={`h-4 w-4 ${
-                            i < product.rating
-                              ? "text-yellow-400 fill-yellow-400"
-                              : "text-gray-200"
-                          }`}
-                        />
-                      ))}
-                      <span className="text-sm text-gray-500 mr-2">
-                        ({product.reviewCount})
-                      </span>
-                    </div>
-                    <h3 className="font-semibold text-slate-800 mb-3 line-clamp-2 group-hover:text-primary transition-colors">
-                      {product.name}
-                    </h3>
-
-                    <div className="mt-auto">
-                      <div className="flex items-center justify-between">
-                        <div className="flex flex-col">
-                          <span className="text-xl font-bold text-slate-800">
-                            {product.price.toLocaleString("fa-IR")} تومان
-                          </span>
-                          {product.originalPrice &&
-                            product.originalPrice > product.price && (
-                              <span className="text-sm text-gray-400 line-through">
-                                {product.originalPrice.toLocaleString("fa-IR")}{" "}
-                                تومان
-                              </span>
-                            )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Link>
+            {featuredProducts.map((product) => (
+              <BestProductCard key={product.id} product={product} />
             ))}
           </div>
 

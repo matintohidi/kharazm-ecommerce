@@ -1,21 +1,9 @@
 import { AddToCartButton } from "@/components/add-to-cart-button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { formatPrice } from "@/lib/utils";
+import { Product } from "@/lib/services";
 import { Eye, Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-interface Product {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  originalPrice?: number;
-  discount?: number;
-  image?: string;
-  category: string;
-  rating: number;
-  reviewCount: number;
-}
 
 interface ProductCardProps {
   product: Product;
@@ -33,13 +21,13 @@ export function ProductCard({ product }: ProductCardProps) {
             className="object-cover transition-transform group-hover:scale-105"
           />
         </Link>
-        <div className="absolute top-2 left-2 flex flex-col gap-2">
+        {/* <div className="absolute top-2 left-2 flex flex-col gap-2">
           {product.discount && product.discount > 0 ? (
             <span className="bg-red-400 text-white text-xs px-2 py-1 rounded-2xl">
               {product.discount.toLocaleString("fa-IR")}٪ تخفیف
             </span>
           ) : null}
-        </div>
+        </div> */}
         <div className="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
           <button
             className="bg-white/80 backdrop-blur-sm p-2 rounded-full hover:bg-white"
@@ -63,7 +51,7 @@ export function ProductCard({ product }: ProductCardProps) {
           </h3>
         </Link>
         <div className="mt-2">
-          <div className="flex items-center gap-2">
+          {/* <div className="flex items-center gap-2">
             <span className="font-bold text-slate-800">
               {formatPrice(product.price)} تومان
             </span>
@@ -72,7 +60,7 @@ export function ProductCard({ product }: ProductCardProps) {
                 {formatPrice(product.originalPrice)} تومان
               </span>
             )}
-          </div>
+          </div> */}
         </div>
       </CardContent>
       <CardFooter className="p-4 pt-0">

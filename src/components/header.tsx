@@ -157,7 +157,9 @@ export default function Header() {
               <ShoppingCart className="h-3 w-3 lg:h-4 lg:w-4" />
               {cartItemsCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-4 w-4 flex items-center justify-center font-medium">
-                  {cartItemsCount > 9 ? "9+" : cartItemsCount}
+                  {cartItemsCount > 9
+                    ? "+۹"
+                    : cartItemsCount.toLocaleString("fa-IR")}
                 </span>
               )}
             </Link>

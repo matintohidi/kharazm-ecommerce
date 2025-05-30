@@ -1,50 +1,50 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useToast } from "@/hooks/use-toast"
-import { Mail } from "lucide-react"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
+import { Mail } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function LoginPage() {
-  const { toast } = useToast()
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
-  const [isGoogleLoading, setIsGoogleLoading] = useState(false)
+  const { toast } = useToast();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
+    e.preventDefault();
+    setIsLoading(true);
 
     // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
     toast({
       title: "ورود موفقیت‌آمیز",
       description: "شما با موفقیت وارد حساب کاربری خود شدید.",
-    })
+    });
 
-    router.push("/account")
-  }
+    router.push("/account");
+  };
 
   const handleGoogleLogin = async () => {
-    setIsGoogleLoading(true)
+    setIsGoogleLoading(true);
 
     // Simulate Google OAuth
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
     toast({
       title: "ورود با گوگل موفقیت‌آمیز",
       description: "شما با موفقیت وارد حساب کاربری خود شدید.",
-    })
+    });
 
-    router.push("/account")
-  }
+    router.push("/account");
+  };
 
   return (
     <div className="h-screen flex overflow-hidden">
@@ -52,7 +52,10 @@ export default function LoginPage() {
       <div className="hidden lg:flex lg:w-[60%] relative">
         <div
           className="w-full bg-cover bg-center bg-no-repeat relative"
-          style={{ backgroundImage: "url('https://wss-sharif.com/_next/static/media/Rectangle.b911abb6.png')" }}
+          style={{
+            backgroundImage:
+              "url('https://wss-sharif.com/_next/static/media/Rectangle.b911abb6.png')",
+          }}
         >
           {/* Overlay */}
           <div className="absolute inset-0 bg-black/50"></div>
@@ -62,19 +65,26 @@ export default function LoginPage() {
             <div className="max-w-md text-center">
               <h1 className="text-4xl xl:text-5xl font-bold mb-4">خوش آمدید</h1>
               <p className="text-lg xl:text-xl mb-8 leading-relaxed opacity-90">
-                به فروشگاه آنلاین خوارزم خوش آمدید. با ورود به حساب کاربری خود، از تمامی امکانات ما بهره‌مند شوید.
+                به فروشگاه آنلاین خوارزم خوش آمدید. با ورود به حساب کاربری خود،
+                از تمامی امکانات ما بهره‌مند شوید.
               </p>
               <div className="grid grid-cols-2 gap-6 text-center">
                 <div>
-                  <div className="text-2xl xl:text-3xl font-bold mb-1">۵۰۰۰+</div>
+                  <div className="text-2xl xl:text-3xl font-bold mb-1">
+                    ۵۰۰۰+
+                  </div>
                   <div className="text-white/80 text-sm">مشتری راضی</div>
                 </div>
                 <div>
-                  <div className="text-2xl xl:text-3xl font-bold mb-1">۱۰۰۰+</div>
+                  <div className="text-2xl xl:text-3xl font-bold mb-1">
+                    ۱۰۰۰+
+                  </div>
                   <div className="text-white/80 text-sm">محصول متنوع</div>
                 </div>
                 <div>
-                  <div className="text-2xl xl:text-3xl font-bold mb-1">۲۴/۷</div>
+                  <div className="text-2xl xl:text-3xl font-bold mb-1">
+                    ۲۴/۷
+                  </div>
                   <div className="text-white/80 text-sm">پشتیبانی</div>
                 </div>
                 <div>
@@ -92,10 +102,16 @@ export default function LoginPage() {
         <div className="w-full max-w-sm px-6 lg:px-8">
           <div className="text-center mb-6">
             <Link href="/" className="inline-block mb-4">
-              <div className="text-2xl lg:text-3xl font-bold text-primary">خوارزم</div>
+              <div className="text-2xl lg:text-3xl font-bold text-primary">
+                خوارزم
+              </div>
             </Link>
-            <h2 className="text-xl lg:text-2xl font-bold text-slate-800 mb-1">ورود به حساب کاربری</h2>
-            <p className="text-sm text-slate-800">به فروشگاه خوارزم خوش آمدید</p>
+            <h2 className="text-xl lg:text-2xl font-bold text-slate-800 mb-1">
+              ورود به حساب کاربری
+            </h2>
+            <p className="text-sm text-slate-800">
+              به فروشگاه خوارزم خوش آمدید
+            </p>
           </div>
 
           <div className="bg-white rounded-xl shadow-lg p-6">
@@ -130,7 +146,7 @@ export default function LoginPage() {
                   id="email"
                   type="email"
                   required
-                  className="h-11 border-gray-200 focus:border-primary focus:ring-primary/20"
+                  className="h-11 border-gray-200 focus:border-primary focus:ring-primary/20 transition"
                   placeholder="example@email.com"
                 />
               </div>
@@ -139,7 +155,10 @@ export default function LoginPage() {
                   <Label htmlFor="password" className="text-slate-800 text-sm">
                     رمز عبور
                   </Label>
-                  <Link href="/auth/forgot-password" className="text-xs text-primary hover:underline">
+                  <Link
+                    href="/auth/forgot-password"
+                    className="text-xs text-primary hover:underline"
+                  >
                     فراموشی رمز عبور
                   </Link>
                 </div>
@@ -147,7 +166,7 @@ export default function LoginPage() {
                   id="password"
                   type="password"
                   required
-                  className="h-11 border-gray-200 focus:border-primary focus:ring-primary/20"
+                  className="h-11 border-gray-200 focus:border-primary focus:ring-primary/20 transition"
                   placeholder="رمز عبور خود را وارد کنید"
                 />
               </div>
@@ -163,7 +182,10 @@ export default function LoginPage() {
             <div className="mt-6 text-center">
               <p className="text-sm text-slate-800">
                 حساب کاربری ندارید؟{" "}
-                <Link href="/auth/register" className="text-primary hover:underline font-medium">
+                <Link
+                  href="/auth/register"
+                  className="text-primary hover:underline font-medium"
+                >
                   ثبت‌نام کنید
                 </Link>
               </p>
@@ -172,5 +194,5 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -259,6 +259,8 @@ export default function Header() {
           </div>
         </aside>
       </div>
+
+      {!isHaveBackgroundPage && <div className="h-8 lg:h-20"></div>}
     </header>
   );
 }

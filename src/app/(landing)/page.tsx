@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { AddToCartButton } from "@/components/add-to-cart-button";
 
 export default async function Home() {
   const featuredProducts = await getFeaturedProducts();
@@ -53,10 +54,10 @@ export default async function Home() {
             <div className="flex items-center justify-center lg:justify-start gap-2 sm:gap-4 lg:gap-[52px] font-bold text-white mt-6 sm:mt-8 lg:mt-[52px] mb-8 sm:mb-12 lg:mb-16 text-base sm:text-2xl lg:text-5xl tracking-tight lg:tracking-[-0.96px] overflow-x-auto">
               <div className="flex flex-col items-center gap-1 lg:gap-3 shrink-0">
                 <div className="flex items-center justify-center rounded-lg border border-white/30 px-2 sm:px-3 lg:px-4 py-1 sm:py-2 lg:py-3 tabular-nums min-w-[35px] sm:min-w-[45px] lg:min-w-[60px]">
-                  00
+                  ۵۴
                 </div>
                 <p className="text-xs sm:text-sm lg:text-base font-normal uppercase text-white">
-                  روز
+                  ثانیه
                 </p>
               </div>
               <div className="font-bold text-white text-base sm:text-2xl lg:text-5xl shrink-0">
@@ -64,18 +65,7 @@ export default async function Home() {
               </div>
               <div className="flex flex-col items-center gap-1 lg:gap-3 shrink-0">
                 <div className="flex items-center justify-center rounded-lg border border-white/30 px-2 sm:px-3 lg:px-4 py-1 sm:py-2 lg:py-3 tabular-nums min-w-[35px] sm:min-w-[45px] lg:min-w-[60px]">
-                  00
-                </div>
-                <p className="text-xs sm:text-sm lg:text-base font-normal uppercase text-white">
-                  ساعت
-                </p>
-              </div>
-              <div className="font-bold text-white text-base sm:text-2xl lg:text-5xl shrink-0">
-                :
-              </div>
-              <div className="flex flex-col items-center gap-1 lg:gap-3 shrink-0">
-                <div className="flex items-center justify-center rounded-lg border border-white/30 px-2 sm:px-3 lg:px-4 py-1 sm:py-2 lg:py-3 tabular-nums min-w-[35px] sm:min-w-[45px] lg:min-w-[60px]">
-                  00
+                  ۱۶
                 </div>
                 <p className="text-xs sm:text-sm lg:text-base font-normal uppercase text-white">
                   دقیقه
@@ -86,10 +76,21 @@ export default async function Home() {
               </div>
               <div className="flex flex-col items-center gap-1 lg:gap-3 shrink-0">
                 <div className="flex items-center justify-center rounded-lg border border-white/30 px-2 sm:px-3 lg:px-4 py-1 sm:py-2 lg:py-3 tabular-nums min-w-[35px] sm:min-w-[45px] lg:min-w-[60px]">
-                  00
+                  ۰۳
                 </div>
                 <p className="text-xs sm:text-sm lg:text-base font-normal uppercase text-white">
-                  ثانیه
+                  ساعت
+                </p>
+              </div>
+              <div className="font-bold text-white text-base sm:text-2xl lg:text-5xl shrink-0">
+                :
+              </div>
+              <div className="flex flex-col items-center gap-1 lg:gap-3 shrink-0">
+                <div className="flex items-center justify-center rounded-lg border border-white/30 px-2 sm:px-3 lg:px-4 py-1 sm:py-2 lg:py-3 tabular-nums min-w-[35px] sm:min-w-[45px] lg:min-w-[60px]">
+                  ۱۰
+                </div>
+                <p className="text-xs sm:text-sm lg:text-base font-normal uppercase text-white">
+                  روز
                 </p>
               </div>
             </div>
@@ -104,7 +105,7 @@ export default async function Home() {
               { number: "+۵", label: "سال تجربه" },
               { number: "+۱۰۰", label: "فروشنده معتبر" },
             ].map((stat, index) => (
-              <div key={index} className="shrink-0">
+              <div key={index} className="shrink-0 text-center">
                 <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight tracking-tight text-white text-reve">
                   {stat.number}
                 </p>
@@ -138,14 +139,15 @@ export default async function Home() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-12">
             {featuredProducts.map((product, index) => (
-              <div
+              <Link
+                href={`/products/${product.id}`}
                 key={product.id}
                 className="group relative"
                 style={{
                   animationDelay: `${index * 100}ms`,
                 }}
               >
-                <div className="relative bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden border border-gray-100 group-hover:border-primary/20">
+                <div className="min-h-[480px] flex flex-col bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden border border-gray-100 group-hover:border-primary/20">
                   <div className="relative aspect-square overflow-hidden bg-linear-to-br from-gray-50 to-gray-100">
                     <Image
                       src={
@@ -163,7 +165,7 @@ export default async function Home() {
                     )}
 
                     <div className="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <button className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-colors cursor-move">
+                      <button className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-colors cursor-pointer">
                         <Star className="h-4 w-4 text-slate-800" />
                       </button>
                     </div>
@@ -171,7 +173,7 @@ export default async function Home() {
                     <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
 
-                  <div className="p-6">
+                  <div className="flex-1 flex flex-col p-6">
                     <div className="flex items-center gap-1 mb-2">
                       {[...Array(5)].map((_, i) => (
                         <Star
@@ -187,28 +189,29 @@ export default async function Home() {
                         ({product.reviewCount})
                       </span>
                     </div>
-
                     <h3 className="font-semibold text-slate-800 mb-3 line-clamp-2 group-hover:text-primary transition-colors">
                       {product.name}
                     </h3>
 
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex flex-col">
-                        <span className="text-xl font-bold text-slate-800">
-                          {product.price.toLocaleString("fa-IR")} تومان
-                        </span>
-                        {product.originalPrice &&
-                          product.originalPrice > product.price && (
-                            <span className="text-sm text-gray-400 line-through">
-                              {product.originalPrice.toLocaleString("fa-IR")}{" "}
-                              تومان
-                            </span>
-                          )}
+                    <div className="mt-auto">
+                      <div className="flex items-center justify-between">
+                        <div className="flex flex-col">
+                          <span className="text-xl font-bold text-slate-800">
+                            {product.price.toLocaleString("fa-IR")} تومان
+                          </span>
+                          {product.originalPrice &&
+                            product.originalPrice > product.price && (
+                              <span className="text-sm text-gray-400 line-through">
+                                {product.originalPrice.toLocaleString("fa-IR")}{" "}
+                                تومان
+                              </span>
+                            )}
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
 

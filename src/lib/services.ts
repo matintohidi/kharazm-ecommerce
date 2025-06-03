@@ -45,6 +45,13 @@ export interface Category {
    * @maxLength 50
    */
   name: string;
+  /**
+   * Slug
+   * @format slug
+   * @maxLength 50
+   * @pattern ^[-a-zA-Z0-9_]+$
+   */
+  slug?: string | null;
 }
 
 export interface Order {
@@ -84,19 +91,27 @@ export interface Order {
 
 export interface Product {
   category: PublicCategory;
-  /** Condition */
-  condition?: boolean;
   /** Description */
   description?: string | null;
+  /**
+   * Discount
+   * @min 0
+   * @max 100
+   */
+  discount?: number;
   /** Extra details */
   extra_details?: string | null;
-  /** ID */
-  id?: number;
   /**
    * Image
    * @format uri
    */
   image?: string | null;
+  /**
+   * In stock
+   * @min 0
+   * @max 9223372036854776000
+   */
+  in_stock: number;
   /**
    * Name
    * @minLength 1
@@ -109,6 +124,9 @@ export interface Product {
    * @max 9223372036854776000
    */
   price: number;
+  reviews: [PublicReview];
+  /** Sale price */
+  sale_price?: number;
   /**
    * Token
    * @maxLength 10
@@ -123,6 +141,14 @@ export interface PublicCategory {
    * @maxLength 100
    */
   name: string;
+  /**
+   * Slug
+   * @format slug
+   * @minLength 1
+   * @maxLength 50
+   * @pattern ^[-a-zA-Z0-9_]+$
+   */
+  slug: string;
 }
 
 export interface PublicProduct {
@@ -132,14 +158,26 @@ export interface PublicProduct {
    * @maxLength 100
    */
   name: string;
-  /** Price */
-  price?: number;
+  /** Sale price */
+  sale_price?: number;
   /**
    * Token
    * @minLength 1
    * @maxLength 50
    */
   token: string;
+}
+
+export interface PublicReview {
+  /**
+   * Review
+   * @minLength 1
+   * @maxLength 100
+   */
+  review: string;
+  /** Star */
+  star: number;
+  user: PublicUser;
 }
 
 export interface PublicUser {
@@ -155,6 +193,18 @@ export interface PublicUser {
    * @maxLength 100
    */
   username?: string;
+}
+
+export interface Review {
+  product?: PublicProduct;
+  /**
+   * Review
+   * @minLength 1
+   */
+  review: string;
+  /** Star */
+  star: 1 | 2 | 3 | 4 | 5;
+  user?: PublicUser;
 }
 
 export interface User {
@@ -210,7 +260,7 @@ export interface ApiConfig<SecurityDataType = unknown> {
   baseUrl?: string;
   baseApiParams?: Omit<RequestParams, "baseUrl" | "cancelToken" | "signal">;
   securityWorker?: (
-    securityData: SecurityDataType | null,
+    securityData: SecurityDataType | null
   ) => Promise<RequestParams | void> | RequestParams | void;
   customFetch?: typeof fetch;
 }
@@ -255,7 +305,9 @@ export class HttpClient<SecurityDataType = unknown> {
 
   protected encodeQueryParam(key: string, value: any) {
     const encodedKey = encodeURIComponent(key);
-    return `${encodedKey}=${encodeURIComponent(typeof value === "number" ? value : `${value}`)}`;
+    return `${encodedKey}=${encodeURIComponent(
+      typeof value === "number" ? value : `${value}`
+    )}`;
   }
 
   protected addQueryParam(query: QueryParamsType, key: string) {
@@ -270,13 +322,13 @@ export class HttpClient<SecurityDataType = unknown> {
   protected toQueryString(rawQuery?: QueryParamsType): string {
     const query = rawQuery || {};
     const keys = Object.keys(query).filter(
-      (key) => "undefined" !== typeof query[key],
+      (key) => "undefined" !== typeof query[key]
     );
     return keys
       .map((key) =>
         Array.isArray(query[key])
           ? this.addArrayQueryParam(query, key)
-          : this.addQueryParam(query, key),
+          : this.addQueryParam(query, key)
       )
       .join("&");
   }
@@ -303,8 +355,8 @@ export class HttpClient<SecurityDataType = unknown> {
           property instanceof Blob
             ? property
             : typeof property === "object" && property !== null
-              ? JSON.stringify(property)
-              : `${property}`,
+            ? JSON.stringify(property)
+            : `${property}`
         );
         return formData;
       }, new FormData()),
@@ -313,7 +365,7 @@ export class HttpClient<SecurityDataType = unknown> {
 
   protected mergeRequestParams(
     params1: RequestParams,
-    params2?: RequestParams,
+    params2?: RequestParams
   ): RequestParams {
     return {
       ...this.baseApiParams,
@@ -328,7 +380,7 @@ export class HttpClient<SecurityDataType = unknown> {
   }
 
   protected createAbortSignal = (
-    cancelToken: CancelToken,
+    cancelToken: CancelToken
   ): AbortSignal | undefined => {
     if (this.abortControllers.has(cancelToken)) {
       const abortController = this.abortControllers.get(cancelToken);
@@ -374,7 +426,9 @@ export class HttpClient<SecurityDataType = unknown> {
     const responseFormat = format || requestParams.format;
 
     return this.customFetch(
-      `${baseUrl || this.baseUrl || ""}${path}${queryString ? `?${queryString}` : ""}`,
+      `${baseUrl || this.baseUrl || ""}${path}${
+        queryString ? `?${queryString}` : ""
+      }`,
       {
         ...requestParams,
         headers: {
@@ -391,7 +445,7 @@ export class HttpClient<SecurityDataType = unknown> {
           typeof body === "undefined" || body === null
             ? null
             : payloadFormatter(body),
-      },
+      }
     ).then(async (response) => {
       const r = response.clone() as HttpResponse<T, E>;
       r.data = null as unknown as T;
@@ -429,20 +483,20 @@ export class HttpClient<SecurityDataType = unknown> {
  * @baseUrl http://127.0.0.1:8000
  */
 export class Api<
-  SecurityDataType extends unknown,
+  SecurityDataType extends unknown
 > extends HttpClient<SecurityDataType> {
-  addToCart = {
+  cart = {
     /**
      * No description
      *
-     * @tags add_to_cart
-     * @name AddToCartCreate
-     * @request POST:/add_to_cart/
+     * @tags cart
+     * @name CartAddCreate
+     * @request POST:/cart/add/
      * @secure
      */
-    addToCartCreate: (data: Cart, params: RequestParams = {}) =>
+    cartAddCreate: (data: Cart, params: RequestParams = {}) =>
       this.request<Cart, any>({
-        path: `/add_to_cart/`,
+        path: `/cart/add/`,
         method: "POST",
         body: data,
         secure: true,
@@ -450,22 +504,69 @@ export class Api<
         format: "json",
         ...params,
       }),
-  };
-  carts = {
+
     /**
      * No description
      *
-     * @tags carts
-     * @name CartsList
-     * @request GET:/carts/
+     * @tags cart
+     * @name CartClearDelete
+     * @request DELETE:/cart/clear/
      * @secure
      */
-    cartsList: (params: RequestParams = {}) =>
+    cartClearDelete: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/cart/clear/`,
+        method: "DELETE",
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags cart
+     * @name CartDecreaseDelete
+     * @request DELETE:/cart/decrease/
+     * @secure
+     */
+    cartDecreaseDelete: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/cart/decrease/`,
+        method: "DELETE",
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags cart
+     * @name CartList
+     * @request GET:/cart/
+     * @secure
+     */
+    cartList: (params: RequestParams = {}) =>
       this.request<Cart[], any>({
-        path: `/carts/`,
+        path: `/cart/`,
         method: "GET",
         secure: true,
         format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags cart
+     * @name CartUpdatePartialUpdate
+     * @request PATCH:/cart/update/
+     * @secure
+     */
+    cartUpdatePartialUpdate: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/cart/update/`,
+        method: "PATCH",
+        secure: true,
         ...params,
       }),
   };
@@ -587,6 +688,26 @@ export class Api<
     registerCreate: (data: User, params: RequestParams = {}) =>
       this.request<User, any>({
         path: `/register/`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+  };
+  review = {
+    /**
+     * No description
+     *
+     * @tags review
+     * @name ReviewCreate
+     * @request POST:/review/
+     * @secure
+     */
+    reviewCreate: (data: Review, params: RequestParams = {}) =>
+      this.request<Review, any>({
+        path: `/review/`,
         method: "POST",
         body: data,
         secure: true,

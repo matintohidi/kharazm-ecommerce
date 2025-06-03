@@ -17,8 +17,8 @@ interface CartState {
 interface CartContextType {
   cart: CartState;
   addToCart: (product: Omit<CartItem, "quantity">) => void;
-  removeFromCart: (productId: number) => void;
-  updateQuantity: (productId: number, quantity: number) => void;
+  removeFromCart: (productId: string) => void;
+  updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
 }
 
@@ -52,13 +52,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const addToCart = (product: Omit<CartItem, "quantity">) => {
     setCart((prevCart) => {
       const existingItem = prevCart.items.find(
-        (item) => item.id === product.id
+        (item) => item.token === product.token
       );
 
       if (existingItem) {
         // If item already exists, increase quantity
         const updatedItems = prevCart.items.map((item) =>
-          item.id === product.id
+          item.token === product.token
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
@@ -84,9 +84,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
-  const removeFromCart = (productId: number) => {
+  const removeFromCart = (productId: string) => {
     setCart((prevCart) => {
-      const item = prevCart.items.find((item) => item.id === productId);
+      const item = prevCart.items.find((item) => item.token === productId);
 
       if (item) {
         toast({
@@ -97,15 +97,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
       return {
         ...prevCart,
-        items: prevCart.items.filter((item) => item.id !== productId),
+        items: prevCart.items.filter((item) => item.token !== productId),
       };
     });
   };
 
-  const updateQuantity = (productId: number, quantity: number) => {
+  const updateQuantity = (productId: string, quantity: number) => {
     setCart((prevCart) => {
       const updatedItems = prevCart.items.map((item) =>
-        item.id === productId ? { ...item, quantity } : item
+        item.token === productId ? { ...item, quantity } : item
       );
       return { ...prevCart, items: updatedItems };
     });

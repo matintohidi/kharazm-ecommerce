@@ -13,9 +13,10 @@ import { BestProductCard } from "@/app/(landing)/components/bestProductCard";
 
 async function getBestProducts() {
   const res = await Api.products.productsList({
-    next: {
-      revalidate: 3 * 60 * 60,
-    },
+    // next: {
+    //   revalidate: 3 * 60 * 60,
+    // },
+    cache: "no-store",
   });
 
   return res.json();
@@ -148,7 +149,7 @@ export default async function Home() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-12">
             {featuredProducts.map((product) => (
-              <BestProductCard key={product.id} product={product} />
+              <BestProductCard key={product.token} product={product} />
             ))}
           </div>
 

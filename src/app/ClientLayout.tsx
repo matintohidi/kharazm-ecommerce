@@ -7,6 +7,7 @@ import { CartProvider } from "@/components/cart-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { CookiesProvider } from "react-cookie";
 import { UserProvider } from "@/components/user-provider";
+import QueryProvider from "@/providers/react-query-provider";
 
 export default function ClientLayout({
   children,
@@ -17,19 +18,21 @@ export default function ClientLayout({
   const isAuthPage = pathname?.startsWith("/auth");
 
   return (
-    <CookiesProvider>
-      <UserProvider>
-        <CartProvider>
-          <div className="relative flex min-h-screen flex-col">
-            {!isAuthPage && <Header />}
-            <div className={isAuthPage ? "min-h-screen" : "flex-1"}>
-              {children}
+    <QueryProvider>
+      <CookiesProvider>
+        <UserProvider>
+          <CartProvider>
+            <div className="relative flex min-h-screen flex-col">
+              {!isAuthPage && <Header />}
+              <div className={isAuthPage ? "min-h-screen" : "flex-1"}>
+                {children}
+              </div>
+              {!isAuthPage && <Footer />}
             </div>
-            {!isAuthPage && <Footer />}
-          </div>
-          <Toaster />
-        </CartProvider>
-      </UserProvider>
-    </CookiesProvider>
+            <Toaster />
+          </CartProvider>
+        </UserProvider>
+      </CookiesProvider>
+    </QueryProvider>
   );
 }

@@ -31,6 +31,12 @@ export interface AuthToken {
 export interface Cart {
   product?: PublicProduct;
   /**
+   * Product token
+   * @minLength 1
+   * @maxLength 100
+   */
+  product_token: string;
+  /**
    * Quantity
    * @min -9223372036854776000
    * @max 9223372036854776000
@@ -45,13 +51,6 @@ export interface Category {
    * @maxLength 50
    */
   name: string;
-  /**
-   * Slug
-   * @format slug
-   * @maxLength 50
-   * @pattern ^[-a-zA-Z0-9_]+$
-   */
-  slug?: string | null;
 }
 
 export interface Order {
@@ -124,7 +123,7 @@ export interface Product {
    * @max 9223372036854776000
    */
   price: number;
-  reviews: [PublicReview];
+  reviews?: PublicReview[];
   /** Sale price */
   sale_price?: number;
   /**
@@ -141,14 +140,6 @@ export interface PublicCategory {
    * @maxLength 100
    */
   name: string;
-  /**
-   * Slug
-   * @format slug
-   * @minLength 1
-   * @maxLength 50
-   * @pattern ^[-a-zA-Z0-9_]+$
-   */
-  slug: string;
 }
 
 export interface PublicProduct {
@@ -157,7 +148,7 @@ export interface PublicProduct {
    * @minLength 1
    * @maxLength 100
    */
-  name: string;
+  name?: string;
   /** Sale price */
   sale_price?: number;
   /**
@@ -165,7 +156,7 @@ export interface PublicProduct {
    * @minLength 1
    * @maxLength 50
    */
-  token: string;
+  token?: string;
 }
 
 export interface PublicReview {
@@ -196,7 +187,12 @@ export interface PublicUser {
 }
 
 export interface Review {
-  product?: PublicProduct;
+  /**
+   * Product token
+   * @minLength 1
+   * @maxLength 100
+   */
+  product_token: string;
   /**
    * Review
    * @minLength 1
@@ -204,7 +200,6 @@ export interface Review {
   review: string;
   /** Star */
   star: 1 | 2 | 3 | 4 | 5;
-  user?: PublicUser;
 }
 
 export interface User {
@@ -214,6 +209,16 @@ export interface User {
    * @maxLength 254
    */
   email?: string;
+  /**
+   * First name
+   * @maxLength 150
+   */
+  first_name?: string;
+  /**
+   * Last name
+   * @maxLength 150
+   */
+  last_name?: string;
   /**
    * Password
    * @minLength 1
@@ -260,7 +265,7 @@ export interface ApiConfig<SecurityDataType = unknown> {
   baseUrl?: string;
   baseApiParams?: Omit<RequestParams, "baseUrl" | "cancelToken" | "signal">;
   securityWorker?: (
-    securityData: SecurityDataType | null
+    securityData: SecurityDataType | null,
   ) => Promise<RequestParams | void> | RequestParams | void;
   customFetch?: typeof fetch;
 }
@@ -305,9 +310,7 @@ export class HttpClient<SecurityDataType = unknown> {
 
   protected encodeQueryParam(key: string, value: any) {
     const encodedKey = encodeURIComponent(key);
-    return `${encodedKey}=${encodeURIComponent(
-      typeof value === "number" ? value : `${value}`
-    )}`;
+    return `${encodedKey}=${encodeURIComponent(typeof value === "number" ? value : `${value}`)}`;
   }
 
   protected addQueryParam(query: QueryParamsType, key: string) {
@@ -322,13 +325,13 @@ export class HttpClient<SecurityDataType = unknown> {
   protected toQueryString(rawQuery?: QueryParamsType): string {
     const query = rawQuery || {};
     const keys = Object.keys(query).filter(
-      (key) => "undefined" !== typeof query[key]
+      (key) => "undefined" !== typeof query[key],
     );
     return keys
       .map((key) =>
         Array.isArray(query[key])
           ? this.addArrayQueryParam(query, key)
-          : this.addQueryParam(query, key)
+          : this.addQueryParam(query, key),
       )
       .join("&");
   }
@@ -355,8 +358,8 @@ export class HttpClient<SecurityDataType = unknown> {
           property instanceof Blob
             ? property
             : typeof property === "object" && property !== null
-            ? JSON.stringify(property)
-            : `${property}`
+              ? JSON.stringify(property)
+              : `${property}`,
         );
         return formData;
       }, new FormData()),
@@ -365,7 +368,7 @@ export class HttpClient<SecurityDataType = unknown> {
 
   protected mergeRequestParams(
     params1: RequestParams,
-    params2?: RequestParams
+    params2?: RequestParams,
   ): RequestParams {
     return {
       ...this.baseApiParams,
@@ -380,7 +383,7 @@ export class HttpClient<SecurityDataType = unknown> {
   }
 
   protected createAbortSignal = (
-    cancelToken: CancelToken
+    cancelToken: CancelToken,
   ): AbortSignal | undefined => {
     if (this.abortControllers.has(cancelToken)) {
       const abortController = this.abortControllers.get(cancelToken);
@@ -426,9 +429,7 @@ export class HttpClient<SecurityDataType = unknown> {
     const responseFormat = format || requestParams.format;
 
     return this.customFetch(
-      `${baseUrl || this.baseUrl || ""}${path}${
-        queryString ? `?${queryString}` : ""
-      }`,
+      `${baseUrl || this.baseUrl || ""}${path}${queryString ? `?${queryString}` : ""}`,
       {
         ...requestParams,
         headers: {
@@ -445,7 +446,7 @@ export class HttpClient<SecurityDataType = unknown> {
           typeof body === "undefined" || body === null
             ? null
             : payloadFormatter(body),
-      }
+      },
     ).then(async (response) => {
       const r = response.clone() as HttpResponse<T, E>;
       r.data = null as unknown as T;
@@ -483,8 +484,25 @@ export class HttpClient<SecurityDataType = unknown> {
  * @baseUrl http://127.0.0.1:8000
  */
 export class Api<
-  SecurityDataType extends unknown
+  SecurityDataType extends unknown,
 > extends HttpClient<SecurityDataType> {
+  authMe = {
+    /**
+     * No description
+     *
+     * @tags auth_me
+     * @name AuthMeList
+     * @request GET:/auth_me/
+     * @secure
+     */
+    authMeList: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/auth_me/`,
+        method: "GET",
+        secure: true,
+        ...params,
+      }),
+  };
   cart = {
     /**
      * No description

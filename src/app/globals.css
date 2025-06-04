@@ -48,31 +48,29 @@
 }
 
 @layer base {
-  body {
-    --sb-track-color: transparent;
-    --sb-thumb-color: #a35fa1;
-    --sb-size: 8px;
-  }
-
-  body::-webkit-scrollbar {
-    width: var(--sb-size);
-  }
-
-  body::-webkit-scrollbar-track {
-    background: var(--sb-track-color);
-  }
-
-  body::-webkit-scrollbar-thumb {
-    background: var(--sb-thumb-color);
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
-
-  @supports not selector(::-webkit-scrollbar) {
+  @media (min-width: 700px) {
     body {
-      scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+      --sb-track-color: transparent;
+      --sb-thumb-color: #a35fa1;
+      --sb-size: 8px;
+    }
+
+    body::-webkit-scrollbar {
+      width: var(--sb-size);
+    }
+
+    body::-webkit-scrollbar-track {
+      background: var(--sb-track-color);
+    }
+
+    body::-webkit-scrollbar-thumb {
+      background: var(--sb-thumb-color);
+    }
+
+    @supports not selector(::-webkit-scrollbar) {
+      body {
+        scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+      }
     }
   }
 }

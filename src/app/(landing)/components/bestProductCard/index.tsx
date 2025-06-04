@@ -59,7 +59,7 @@ export const BestProductCard = (props: BestProductCardProps) => {
             <div className="flex items-center gap-1">
               <Rating product={product} />
               <span className="text-sm text-gray-500 mr-2">
-                {`(${reviews.length || 0})`}
+                {`(${reviews?.length || 0})`}
               </span>
             </div>
 

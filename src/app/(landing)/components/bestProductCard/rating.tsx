@@ -18,15 +18,25 @@ export const Rating = ({ product }: RatingProps) => {
   const { toast } = useToast();
 
   const avgReview =
-    reviews.reduce((acc, review) => acc + review.star, 0) / reviews.length || 0;
+    reviews && reviews.length > 0
+      ? reviews.reduce((acc, review) => acc + review.star, 0) / reviews.length
+      : 0;
 
   const handleStarClick = async (index: number) => {
-    if (!token || user) return;
+    if (!token) return;
+
+    if (!user) {
+      toast({
+        title: "خطا",
+        description: "برای ثبت نظر باید وارد حساب کاربری خود شوید.",
+        variant: "destructive",
+      });
+    }
 
     try {
       const res = await Api.review.reviewCreate(
         {
-          product: { token, name },
+          product_token: token,
           review: "",
           star: (index + 1) as 1 | 2 | 3 | 4 | 5,
         },

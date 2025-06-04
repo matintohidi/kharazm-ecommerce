@@ -22,7 +22,6 @@ export default function RegisterPage() {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
     toast({

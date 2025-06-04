@@ -186,7 +186,7 @@ export default async function Home() {
               و محصولات جدید مطلع می‌شوید
             </p>
 
-            <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <div className="flex-1 relative">
                 <input
                   type="email"
@@ -200,7 +200,7 @@ export default async function Home() {
               >
                 عضویت
               </Button>
-            </form>
+            </div>
 
             <p className="text-sm text-slate-800 mt-4">
               با عضویت، شرایط و قوانین خبرنامه را می‌پذیرید

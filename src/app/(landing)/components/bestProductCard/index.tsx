@@ -1,4 +1,4 @@
-import { Rating } from "@/app/(landing)/components/bestProductCard/rating";
+import { Rating } from "@/components/rating";
 import { Badge } from "@/components/ui/badge";
 import { API_URL } from "@/configs/app.config";
 import { Product } from "@/lib/services";

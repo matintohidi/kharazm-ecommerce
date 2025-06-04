@@ -36,7 +36,7 @@ export function AddToCartButton({
       disabled={isAdding}
       variant={variant}
       size={size}
-      className="flex-1"
+      className="flex-1 w-full"
     >
       <ShoppingCart className="h-4 w-4 ml-2" />
       {isAdding ? "در حال افزودن..." : "افزودن به سبد خرید"}

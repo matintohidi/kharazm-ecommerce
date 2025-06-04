@@ -4,7 +4,6 @@ import { useRating } from "@/app/(landing)/_api/rating";
 import { Rating as RatingComponent } from "@/components/ui/rating";
 import { useUser } from "@/components/user-provider";
 import { useToast } from "@/hooks/use-toast";
-import { Api } from "@/lib/api";
 import { Product, Review } from "@/lib/services";
 import { useCookies } from "react-cookie";
 

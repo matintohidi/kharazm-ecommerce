@@ -73,7 +73,7 @@ export const RegisterForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const data: User = {
+    const model: User = {
       username: values.username,
       email: values.email,
       first_name: values.first_name,
@@ -81,7 +81,7 @@ export const RegisterForm = () => {
       password: values.password,
     };
 
-    register.submit(data);
+    register.submit(model);
   };
 
   return (

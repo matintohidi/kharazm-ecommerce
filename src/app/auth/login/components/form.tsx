@@ -64,12 +64,12 @@ export const LoginForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const data: User = {
+    const model: User = {
       password: values.password,
       username: values.username,
     };
 
-    login.submit(data);
+    login.submit(model);
   };
 
   return (

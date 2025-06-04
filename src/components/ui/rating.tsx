@@ -6,11 +6,12 @@ import * as React from "react";
 interface StarProps {
   avgReview: number;
   handleStarClick: (index: number) => Promise<void>;
+  isPending?: boolean;
 }
 
 const Rating = React.forwardRef<HTMLDivElement, StarProps>(
   ({ ...props }, ref) => {
-    const { avgReview, handleStarClick } = props;
+    const { avgReview, handleStarClick, isPending } = props;
     const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
 
     return (
@@ -26,7 +27,12 @@ const Rating = React.forwardRef<HTMLDivElement, StarProps>(
           return (
             <button
               key={index}
-              className="relative transition-transform duration-300 hover:scale-120"
+              disabled={isPending}
+              className={`relative ${
+                isPending
+                  ? "animate-pulse"
+                  : "transition-transform duration-300 hover:scale-120"
+              }`}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
               onClick={(e) => {
@@ -36,7 +42,8 @@ const Rating = React.forwardRef<HTMLDivElement, StarProps>(
             >
               <Star
                 className={`h-4 w-4 transition-colors duration-400 ${
-                  isHovered || (!isHovered && (isFullStar || isHalfStar))
+                  isHovered ||
+                  (!isHovered && (isFullStar || isHalfStar) && !isPending)
                     ? "text-yellow-400"
                     : "text-gray-300"
                 }`}

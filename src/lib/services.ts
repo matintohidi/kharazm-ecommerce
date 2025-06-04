@@ -10,138 +10,6 @@
  * ---------------------------------------------------------------
  */
 
-export interface AuthToken {
-  /**
-   * Password
-   * @minLength 1
-   */
-  password: string;
-  /**
-   * Token
-   * @minLength 1
-   */
-  token?: string;
-  /**
-   * Username
-   * @minLength 1
-   */
-  username: string;
-}
-
-export interface Cart {
-  product?: PublicProduct;
-  /**
-   * Product token
-   * @minLength 1
-   * @maxLength 100
-   */
-  product_token: string;
-  /**
-   * Quantity
-   * @min -9223372036854776000
-   * @max 9223372036854776000
-   */
-  quantity?: number;
-}
-
-export interface Category {
-  /**
-   * Name
-   * @minLength 1
-   * @maxLength 50
-   */
-  name: string;
-}
-
-export interface Order {
-  /**
-   * Address
-   * @minLength 1
-   */
-  address: string;
-  /** Cart */
-  cart?: string;
-  /**
-   * City
-   * @minLength 1
-   */
-  city: string;
-  /**
-   * Date
-   * @format date-time
-   */
-  date?: string;
-  /**
-   * Number
-   * @min -9223372036854776000
-   * @max 9223372036854776000
-   */
-  number: number;
-  /** Price */
-  price?: number;
-  /**
-   * Status
-   * @minLength 1
-   * @maxLength 50
-   */
-  status?: string;
-  user?: PublicUser;
-}
-
-export interface Product {
-  category: PublicCategory;
-  /** Description */
-  description?: string | null;
-  /**
-   * Discount
-   * @min 0
-   * @max 100
-   */
-  discount?: number;
-  /** Extra details */
-  extra_details?: string | null;
-  /**
-   * Image
-   * @format uri
-   */
-  image?: string | null;
-  /**
-   * In stock
-   * @min 0
-   * @max 9223372036854776000
-   */
-  in_stock: number;
-  /**
-   * Name
-   * @minLength 1
-   * @maxLength 100
-   */
-  name: string;
-  /**
-   * Price
-   * @min -9223372036854776000
-   * @max 9223372036854776000
-   */
-  price: number;
-  reviews?: PublicReview[];
-  /** Sale price */
-  sale_price?: number;
-  /**
-   * Token
-   * @maxLength 10
-   */
-  token?: string | null;
-}
-
-export interface PublicCategory {
-  /**
-   * Name
-   * @minLength 1
-   * @maxLength 100
-   */
-  name: string;
-}
-
 export interface PublicProduct {
   /**
    * Name
@@ -159,7 +27,57 @@ export interface PublicProduct {
   token?: string;
 }
 
+export interface Cart {
+  /**
+   * Product token
+   * @minLength 1
+   * @maxLength 100
+   */
+  product_token: string;
+  /**
+   * Quantity
+   * @min -9223372036854776000
+   * @max 9223372036854776000
+   */
+  quantity?: number;
+  product?: PublicProduct;
+}
+
+export interface Category {
+  /**
+   * Name
+   * @minLength 1
+   * @maxLength 50
+   */
+  name: string;
+}
+
+export interface PublicCategory {
+  /**
+   * Name
+   * @minLength 1
+   * @maxLength 100
+   */
+  name: string;
+}
+
+export interface PublicUser {
+  /**
+   * Username
+   * @minLength 1
+   * @maxLength 100
+   */
+  username?: string;
+  /**
+   * Email
+   * @minLength 1
+   * @maxLength 100
+   */
+  email?: string;
+}
+
 export interface PublicReview {
+  user: PublicUser;
   /**
    * Review
    * @minLength 1
@@ -168,47 +86,117 @@ export interface PublicReview {
   review: string;
   /** Star */
   star: number;
-  user: PublicUser;
 }
 
-export interface PublicUser {
+export interface Product {
   /**
-   * Email
+   * Token
+   * @maxLength 10
+   */
+  token?: string | null;
+  /**
+   * Name
    * @minLength 1
    * @maxLength 100
    */
-  email?: string;
+  name: string;
   /**
-   * Username
-   * @minLength 1
-   * @maxLength 100
+   * Price
+   * @min -9223372036854776000
+   * @max 9223372036854776000
    */
-  username?: string;
+  price: number;
+  /**
+   * Discount
+   * @min 0
+   * @max 100
+   */
+  discount?: number;
+  /** Sale price */
+  sale_price?: number;
+  /**
+   * In stock
+   * @min 0
+   * @max 9223372036854776000
+   */
+  in_stock: number;
+  category: PublicCategory;
+  /** Description */
+  description?: string | null;
+  /**
+   * Image
+   * @format uri
+   */
+  image?: string | null;
+  /** Extra details */
+  extra_details?: string | null;
+  reviews?: PublicReview[];
 }
 
-export interface Review {
+export interface Order {
+  user?: PublicUser;
   /**
-   * Product token
-   * @minLength 1
-   * @maxLength 100
-   */
-  product_token: string;
-  /**
-   * Review
+   * Address
    * @minLength 1
    */
-  review: string;
-  /** Star */
-  star: 1 | 2 | 3 | 4 | 5;
+  address: string;
+  /**
+   * Number
+   * @min -9223372036854776000
+   * @max 9223372036854776000
+   */
+  number: number;
+  /**
+   * City
+   * @minLength 1
+   */
+  city: string;
+  /** Price */
+  price?: number;
+  /**
+   * Status
+   * @minLength 1
+   * @maxLength 50
+   */
+  status?: string;
+  /** Cart */
+  cart?: string;
+  /**
+   * Date
+   * @format date-time
+   */
+  date?: string;
+}
+
+export interface PublicToken {
+  /**
+   * Key
+   * @minLength 1
+   */
+  key?: string;
 }
 
 export interface User {
+  token?: PublicToken;
+  /**
+   * Username
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   * @minLength 1
+   * @maxLength 150
+   * @pattern ^[\w.@+-]+$
+   */
+  username: string;
   /**
    * Email address
    * @format email
    * @maxLength 254
    */
   email?: string;
+  /**
+   * Password
+   * @minLength 1
+   */
+  password: string;
   /**
    * First name
    * @maxLength 150
@@ -219,19 +207,40 @@ export interface User {
    * @maxLength 150
    */
   last_name?: string;
+}
+
+export interface Review {
+  /**
+   * Review
+   * @minLength 1
+   */
+  review: string;
+  /** Star */
+  star: 1 | 2 | 3 | 4 | 5;
+  /**
+   * Product token
+   * @minLength 1
+   * @maxLength 100
+   */
+  product_token: string;
+}
+
+export interface AuthToken {
+  /**
+   * Username
+   * @minLength 1
+   */
+  username: string;
   /**
    * Password
    * @minLength 1
    */
   password: string;
   /**
-   * Username
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   * Token
    * @minLength 1
-   * @maxLength 150
-   * @pattern ^[\w.@+-]+$
    */
-  username: string;
+  token?: string;
 }
 
 export type QueryParamsType = Record<string | number, any>;
@@ -508,6 +517,23 @@ export class Api<
      * No description
      *
      * @tags cart
+     * @name CartList
+     * @request GET:/cart/
+     * @secure
+     */
+    cartList: (params: RequestParams = {}) =>
+      this.request<Cart[], any>({
+        path: `/cart/`,
+        method: "GET",
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags cart
      * @name CartAddCreate
      * @request POST:/cart/add/
      * @secure
@@ -552,23 +578,6 @@ export class Api<
         path: `/cart/decrease/`,
         method: "DELETE",
         secure: true,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags cart
-     * @name CartList
-     * @request GET:/cart/
-     * @secure
-     */
-    cartList: (params: RequestParams = {}) =>
-      this.request<Cart[], any>({
-        path: `/cart/`,
-        method: "GET",
-        secure: true,
-        format: "json",
         ...params,
       }),
 
@@ -623,7 +632,58 @@ export class Api<
         ...params,
       }),
   };
+  login = {
+    /**
+     * No description
+     *
+     * @tags login
+     * @name LoginCreate
+     * @request POST:/login/
+     * @secure
+     */
+    loginCreate: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/login/`,
+        method: "POST",
+        secure: true,
+        ...params,
+      }),
+  };
+  logout = {
+    /**
+     * No description
+     *
+     * @tags logout
+     * @name LogoutList
+     * @request GET:/logout/
+     * @secure
+     */
+    logoutList: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/logout/`,
+        method: "GET",
+        secure: true,
+        ...params,
+      }),
+  };
   order = {
+    /**
+     * No description
+     *
+     * @tags order
+     * @name OrderList
+     * @request GET:/order/
+     * @secure
+     */
+    orderList: (params: RequestParams = {}) =>
+      this.request<Order[], any>({
+        path: `/order/`,
+        method: "GET",
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
     /**
      * No description
      *
@@ -639,23 +699,6 @@ export class Api<
         body: data,
         secure: true,
         type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags order
-     * @name OrderList
-     * @request GET:/order/
-     * @secure
-     */
-    orderList: (params: RequestParams = {}) =>
-      this.request<Order[], any>({
-        path: `/order/`,
-        method: "GET",
-        secure: true,
         format: "json",
         ...params,
       }),
@@ -731,6 +774,23 @@ export class Api<
         secure: true,
         type: ContentType.Json,
         format: "json",
+        ...params,
+      }),
+  };
+  search = {
+    /**
+     * No description
+     *
+     * @tags search
+     * @name SearchList
+     * @request GET:/search/
+     * @secure
+     */
+    searchList: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/search/`,
+        method: "GET",
+        secure: true,
         ...params,
       }),
   };

@@ -1,7 +1,6 @@
 import { Rating } from "@/app/(landing)/components/bestProductCard/rating";
 import { Badge } from "@/components/ui/badge";
 import { API_URL } from "@/configs/app.config";
-import { Api } from "@/lib/api";
 import { Product } from "@/lib/services";
 import { Star } from "lucide-react";
 import Image from "next/image";

@@ -17,17 +17,22 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Api } from "@/lib/api";
 import { useCookies } from "react-cookie";
 import { useUser } from "@/components/user-provider";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { useRegister } from "@/app/auth/register/_api/register";
+import { User } from "@/lib/services";
 
 const formSchema = z.object({
   username: z.string().min(1, "نام کاربری نمی‌تواند خالی باشد"),
+  email: z.string().email("ایمیل نامعتبر است"),
+  first_name: z.string().min(1, "نام نمی‌تواند خالی باشد"),
+  last_name: z.string().min(1, "نام خانوادگی نمی‌تواند خالی باشد"),
   password: z.string().min(6, "رمز عبور باید حداقل ۶ کاراکتر باشد"),
 });
 
-export const LoginForm = () => {
-  const [isLoading, setIsLoading] = React.useState(false);
+export const RegisterForm = () => {
   const { setUser } = useUser();
 
   const [_, setCookie] = useCookies();
@@ -38,98 +43,158 @@ export const LoginForm = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
+      email: "",
+      first_name: "",
+      last_name: "",
       password: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    setIsLoading(true);
+  const register = useRegister({
+    onSuccess: (data) => {
+      const { username, email, first_name, last_name, token } = data;
 
-    try {
-      const res = await Api.token.tokenCreate({
-        username: values.username,
-        password: values.password,
-      });
-
-      setCookie("token", res.data.token);
+      setCookie("token", token);
 
       setUser({
-        username: "matintohidi",
-        email: "matin@gmail.com",
+        email,
+        username,
+        first_name,
+        last_name,
       });
 
       toast({
-        title: "ورود موفقیت‌آمیز",
-        description: "شما با موفقیت وارد حساب کاربری خود شدید.",
+        description:
+          "حساب کاربری شما با موفقیت ایجاد شد. به حساب کاربری خود خوش آمدید!",
       });
 
       router.push("/account");
-    } catch (err: unknown) {
-      if (
-        err &&
-        typeof err === "object" &&
-        "status" in err &&
-        err.status === 401
-      ) {
-        toast({
-          title: "خطا در ورود",
-          description: "ایمیل یا رمز عبور اشتباه است.",
-          variant: "destructive",
-        });
-      }
+    },
+  });
 
-      setIsLoading(false);
-    }
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const data: User = {
+      username: values.username,
+      email: values.email,
+      first_name: values.first_name,
+      last_name: values.last_name,
+      password: values.password,
+    };
+
+    register.submit(data);
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="username"
+            render={({ field }) => (
+              <FormItem className="space-y-1">
+                <FormLabel
+                  htmlFor="username"
+                  className="text-slate-800 text-sm"
+                >
+                  نام کاربری
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    id="username"
+                    required
+                    className="h-11 border-gray-200 focus:border-primary focus:ring-primary/20 transition"
+                    placeholder="نام کاربری خود را وارد کنید"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="space-y-1">
+                <FormLabel htmlFor="email" className="text-slate-800 text-sm">
+                  ایمیل
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    id="email"
+                    required
+                    className="h-11 border-gray-200 focus:border-primary focus:ring-primary/20 transition"
+                    placeholder="ایمیل خود را وارد کنید"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="first_name"
+            render={({ field }) => (
+              <FormItem className="space-y-1">
+                <FormLabel
+                  htmlFor="first_name"
+                  className="text-slate-800 text-sm"
+                >
+                  نام
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    id="first_name"
+                    required
+                    className="h-11 border-gray-200 focus:border-primary focus:ring-primary/20 transition"
+                    placeholder="نام خود را وارد کنید"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="last_name"
+            render={({ field }) => (
+              <FormItem className="space-y-1">
+                <FormLabel
+                  htmlFor="last_name"
+                  className="text-slate-800 text-sm"
+                >
+                  نام خانوادگی
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    id="last_name"
+                    required
+                    className="h-11 border-gray-200 focus:border-primary focus:ring-primary/20 transition"
+                    placeholder="نام خانوادگی خود را وارد کنید"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         <FormField
           control={form.control}
           name="username"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel htmlFor="username" className="text-slate-800 text-sm">
-                ایمیل
+            <FormItem className="space-y-1">
+              <FormLabel htmlFor="password" className="text-slate-800 text-sm">
+                رمز عبور
               </FormLabel>
               <FormControl>
                 <Input
-                  id="username"
-                  type="username"
-                  required
-                  className="h-11 border-gray-200 focus:border-primary focus:ring-primary/20 transition"
-                  placeholder="example@username.com"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <div className="flex items-center justify-between">
-                <FormLabel
-                  htmlFor="password"
-                  className="text-slate-800 text-sm"
-                >
-                  رمز عبور
-                </FormLabel>
-                <Link
-                  href="/auth/forgot-password"
-                  className="text-xs text-primary hover:underline"
-                >
-                  فراموشی رمز عبور
-                </Link>
-              </div>
-              <FormControl>
-                <Input
                   id="password"
-                  type="password"
                   required
                   className="h-11 border-gray-200 focus:border-primary focus:ring-primary/20 transition"
                   placeholder="رمز عبور خود را وارد کنید"
@@ -140,13 +205,25 @@ export const LoginForm = () => {
             </FormItem>
           )}
         />
-
+        <div className="flex items-center space-x-2 space-x-reverse pt-2 gap-1">
+          <Checkbox id="terms" required />
+          <Label
+            htmlFor="terms"
+            className="text-xs text-slate-800 flex items-center gap-0.5"
+          >
+            با
+            <Link href="/terms" className="text-primary hover:underline">
+              قوانین و مقررات
+            </Link>
+            موافقم
+          </Label>
+        </div>
         <Button
           type="submit"
           className="w-full h-11 bg-primary hover:bg-primary/90 text-white font-semibold rounded-lg transition-colors"
-          disabled={isLoading}
+          disabled={register.isPending}
         >
-          {isLoading ? "در حال ورود..." : "ورود"}
+          {register.isPending ? "در حال ثبت‌نام..." : "ثبت‌نام"}
         </Button>
       </form>
     </Form>

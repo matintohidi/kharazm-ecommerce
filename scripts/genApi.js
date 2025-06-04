@@ -7,8 +7,4 @@ await generateApi({
   output,
   fileName: "services.ts",
   url: "http://127.0.0.1:8000/swagger/?format=openapi",
-  httpClientType: "fetch",
-  sortTypes: true,
-  sortRoutes: true,
-  moduleNameFirstTag: true,
 });

@@ -13,9 +13,6 @@ import { BestProductCard } from "@/app/(landing)/components/bestProductCard";
 
 async function getBestProducts() {
   const res = await Api.products.productsList({
-    // next: {
-    //   revalidate: 3 * 60 * 60,
-    // },
     cache: "no-store",
   });
 

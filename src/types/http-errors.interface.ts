@@ -21,6 +21,7 @@ type ApiError =
   | NotFoundError;
 
 export type {
+  Problems,
   BadRequestError,
   UnauthorizedError,
   ValidationError,

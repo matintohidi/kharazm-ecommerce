@@ -1,7 +1,7 @@
-import { PublicUser } from "@/lib/services";
+import { User as IUser } from "@/lib/services";
 import { createContext, useContext, useState } from "react";
 
-interface User extends PublicUser {}
+interface User extends Omit<IUser, "password"> {}
 
 interface UserContextType {
   user?: User;

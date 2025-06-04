@@ -3,7 +3,7 @@ import { User } from "@/lib/services";
 import { useMutation } from "@tanstack/react-query";
 
 const register = (model: User): Promise<User> =>
-  createData<User, User>("/register", model);
+  createData<User, User>("/register/", model);
 
 type UserRegisterOptions = {
   onSuccess?: (data: User) => void;

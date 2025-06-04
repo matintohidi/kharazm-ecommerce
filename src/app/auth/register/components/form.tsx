@@ -54,7 +54,7 @@ export const RegisterForm = () => {
     onSuccess: (data) => {
       const { username, email, first_name, last_name, token } = data;
 
-      setCookie("token", token);
+      setCookie("token", token?.key);
 
       setUser({
         email,
@@ -186,7 +186,7 @@ export const RegisterForm = () => {
         </div>
         <FormField
           control={form.control}
-          name="username"
+          name="password"
           render={({ field }) => (
             <FormItem className="space-y-1">
               <FormLabel htmlFor="password" className="text-slate-800 text-sm">
@@ -195,6 +195,7 @@ export const RegisterForm = () => {
               <FormControl>
                 <Input
                   id="password"
+                  type="password"
                   required
                   className="h-11 border-gray-200 focus:border-primary focus:ring-primary/20 transition"
                   placeholder="رمز عبور خود را وارد کنید"

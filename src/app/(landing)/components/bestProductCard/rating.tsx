@@ -12,7 +12,7 @@ interface RatingProps {
 }
 
 export const Rating = ({ product }: RatingProps) => {
-  const { token, name, reviews } = product;
+  const { token, reviews } = product;
   const { user } = useUser();
   const [cookies] = useCookies(["token"]);
   const { toast } = useToast();
@@ -25,19 +25,19 @@ export const Rating = ({ product }: RatingProps) => {
   const handleStarClick = async (index: number) => {
     if (!token) return;
 
-    if (!user) {
-      toast({
-        title: "خطا",
-        description: "برای ثبت نظر باید وارد حساب کاربری خود شوید.",
-        variant: "destructive",
-      });
-    }
+    // if (!user) {
+    //   toast({
+    //     title: "خطا",
+    //     description: "برای ثبت نظر باید وارد حساب کاربری خود شوید.",
+    //     variant: "destructive",
+    //   });
+    // }
 
     try {
       const res = await Api.review.reviewCreate(
         {
           product_token: token,
-          review: "",
+          review: "خالی",
           star: (index + 1) as 1 | 2 | 3 | 4 | 5,
         },
         {

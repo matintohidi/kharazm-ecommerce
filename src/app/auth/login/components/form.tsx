@@ -45,7 +45,7 @@ export const LoginForm = () => {
   const login = useLogin({
     onSuccess: (data) => {
       const { username, email, first_name, last_name, token } = data;
-
+      console.log(data);
       setCookie("token", token);
 
       setUser({
@@ -59,7 +59,7 @@ export const LoginForm = () => {
         description: "شما با موفقیت وارد حساب کاربری خود شدید.",
       });
 
-      router.push("/account");
+      // router.push("/account");
     },
   });
 

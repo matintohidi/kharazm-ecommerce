@@ -11,6 +11,7 @@ import { Rating } from "@/components/rating";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Tab } from "@/components/types/tab.type";
 import ProductTabs from "@/app/products/[slug]/_components/tabs/tabs";
+import ProductReviews from "@/app/products/[slug]/_components/reviews/product-reviews";
 
 const revalidate = 3 * 60 * 60;
 
@@ -82,8 +83,7 @@ const ProductPage = async ({
     {
       label: "نظرات",
       value: "reviews",
-      // content: <ProductReviews />,
-      content: "Hello",
+      content: <ProductReviews reviews={reviews} />,
     },
   ];
 
@@ -128,7 +128,7 @@ const ProductPage = async ({
             )}
           </div>
 
-          <h3 className="text-muted-foreground mb-6">{description}</h3>
+          <h2 className="text-muted-foreground mb-6">{description}</h2>
 
           <div className="flex gap-4 mt-auto">
             <AddToCartButton product={product} />

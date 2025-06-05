@@ -5,7 +5,7 @@ import type React from "react";
 import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
 import Link from "next/link";
-import { RegisterForm } from "@/app/auth/register/components/form";
+import { RegisterForm } from "@/app/auth/register/_components/form";
 
 export default function RegisterPage() {
   return (

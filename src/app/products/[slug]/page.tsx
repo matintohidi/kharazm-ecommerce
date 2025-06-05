@@ -2,29 +2,46 @@ import { Button } from "@/components/ui/button";
 import { AddToCartButton } from "@/components/add-to-cart-button";
 import { ProductCard } from "@/components/product-card";
 import { formatPrice } from "@/lib/utils";
-import { Truck, ShieldCheck, RotateCcw } from "lucide-react";
+import { Truck, ShieldCheck, RotateCcw, Star } from "lucide-react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { API_URL } from "@/configs/app.config";
 import { Product } from "@/lib/services";
 import { Rating } from "@/components/rating";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tab } from "@/components/types/tab.type";
+import ProductTabs from "@/app/products/[slug]/_components/tabs/tabs";
 
-// export async function generateStaticParams() {
-//   const products: Products[] = await fetch(`${API_URL}/products/`).then((res) => res.json());
+const revalidate = 3 * 60 * 60;
 
-//   return products.map((products) => ({
-//     slug: product.token,
-//   }));
-// }
+export async function generateStaticParams() {
+  const products: Product[] = await fetch(`${API_URL}/products/`, {
+    next: {
+      revalidate,
+    },
+  }).then((res) => res.json());
+
+  return products.map((product) => ({
+    slug: product.token,
+  }));
+}
 
 async function getProduct(slug: string) {
-  const res = await fetch(`${API_URL}/products/${slug}/`);
+  const res = await fetch(`${API_URL}/products/${slug}/`, {
+    next: {
+      revalidate,
+    },
+  });
 
   return res.json();
 }
 
 async function getRelatedProducts(category: string) {
-  const res = await fetch(`${API_URL}/categories/${category}`);
+  const res = await fetch(`${API_URL}/categories/${category}/`, {
+    next: {
+      revalidate,
+    },
+  });
 
   return res.json();
 }
@@ -46,16 +63,29 @@ const ProductPage = async ({
     in_stock,
     name,
     price,
-    description,
     discount,
     extra_details,
     image,
     reviews,
+    description,
     sale_price,
-    token,
   } = product;
 
   const relatedProducts: Product[] = await getRelatedProducts(category.name);
+
+  const tabs: Tab[] = [
+    {
+      label: "مشخصات محصول",
+      value: "details",
+      content: extra_details,
+    },
+    {
+      label: "نظرات",
+      value: "reviews",
+      // content: <ProductReviews />,
+      content: "Hello",
+    },
+  ];
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
@@ -85,20 +115,20 @@ const ProductPage = async ({
             {sale_price && sale_price < price ? (
               <>
                 <span className="text-lg font-semibold text-slate-800">
-                  {sale_price.toLocaleString("fa-IR")} تومان
+                  {formatPrice(sale_price)} تومان
                 </span>
                 <span className="text-sm text-gray-500 line-through">
-                  {price.toLocaleString("fa-IR")} تومان
+                  {formatPrice(price)} تومان
                 </span>
               </>
             ) : (
               <span className="text-lg font-semibold text-slate-800">
-                {price.toLocaleString("fa-IR")} تومان
+                {formatPrice(price)} تومان
               </span>
             )}
           </div>
 
-          <p className="text-muted-foreground mb-6">{extra_details}</p>
+          <h3 className="text-muted-foreground mb-6">{description}</h3>
 
           <div className="flex gap-4 mt-auto">
             <AddToCartButton product={product} />
@@ -120,6 +150,10 @@ const ProductPage = async ({
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="mt-16">
+        <ProductTabs tabs={tabs} />
       </div>
 
       <div className="mt-16">

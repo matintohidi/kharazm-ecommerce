@@ -5,7 +5,7 @@ import type React from "react";
 import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
 import Link from "next/link";
-import { LoginForm } from "@/app/auth/login/components/form";
+import { LoginForm } from "@/app/auth/login/_components/form";
 
 export default function LoginPage() {
   return (

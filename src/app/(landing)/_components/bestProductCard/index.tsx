@@ -30,9 +30,7 @@ export const BestProductCard = (props: BestProductCardProps) => {
       <div className="min-h-[525px] flex flex-col bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden border border-gray-100 group-hover:border-primary/20">
         <div className="relative aspect-square overflow-hidden bg-linear-to-br from-gray-50 to-gray-100">
           <Image
-            src={
-              `${API_URL}/${image}` || "/placeholder.svg?height=400&width=400"
-            }
+            src={image || "/placeholder.svg?height=400&width=400"}
             alt={name}
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-110"

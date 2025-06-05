@@ -9,7 +9,7 @@ import {
 import Link from "next/link";
 import { Api } from "@/lib/api";
 import { Product } from "@/lib/services";
-import { BestProductCard } from "@/app/(landing)/components/bestProductCard";
+import { BestProductCard } from "@/app/(landing)/_components/bestProductCard";
 
 async function getBestProducts() {
   const res = await Api.products.productsList({

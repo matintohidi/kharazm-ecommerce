@@ -37,9 +37,7 @@ export function ProductCard({ product }: ProductCardProps) {
       <div className="relative aspect-square">
         <Link href={`/products/${token}`}>
           <Image
-            src={
-              `${API_URL}/${image}` || "/placeholder.svg?height=400&width=400"
-            }
+            src={image || "/placeholder.svg?height=400&width=400"}
             alt={name}
             fill
             className="object-cover transition-transform group-hover:scale-105"

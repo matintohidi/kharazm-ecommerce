@@ -1,4 +1,4 @@
-import { AddToCartButton } from "@/components/add-to-cart-button";
+import { AddToCartButton } from "@/components/add-to-cart";
 import { Rating } from "@/components/rating";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -8,7 +8,6 @@ import {
   CardFooter,
   CardTitle,
 } from "@/components/ui/card";
-import { API_URL } from "@/configs/app.config";
 import { Product } from "@/lib/services";
 import { Eye, Heart } from "lucide-react";
 import Image from "next/image";
@@ -115,7 +114,7 @@ export function ProductCard({ product }: ProductCardProps) {
           </Badge>
         </div>
 
-        <AddToCartButton product={product} />
+        <AddToCartButton cart={{ product }} />
       </CardFooter>
     </Card>
   );

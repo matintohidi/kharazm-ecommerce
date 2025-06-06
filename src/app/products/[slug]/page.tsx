@@ -1,17 +1,17 @@
 import { Button } from "@/components/ui/button";
-import { AddToCartButton } from "@/components/add-to-cart-button";
+import { AddToCartButton } from "@/components/add-to-cart";
 import { ProductCard } from "@/components/product-card";
 import { formatPrice } from "@/lib/utils";
-import { Truck, ShieldCheck, RotateCcw, Star } from "lucide-react";
+import { Truck, ShieldCheck, RotateCcw } from "lucide-react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { API_URL } from "@/configs/app.config";
 import { Product } from "@/lib/services";
 import { Rating } from "@/components/rating";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Tab } from "@/components/types/tab.type";
+import { Tab } from "@/types/tab.type";
 import ProductTabs from "@/app/products/[slug]/_components/tabs/tabs";
 import ProductReviews from "@/app/products/[slug]/_components/reviews/product-reviews";
+import { Badge } from "@/components/ui/badge";
 
 const revalidate = 3 * 60 * 60;
 
@@ -70,6 +70,7 @@ const ProductPage = async ({
     reviews,
     description,
     sale_price,
+    token,
   } = product;
 
   const relatedProducts: Product[] = await getRelatedProducts(category.name);
@@ -107,20 +108,26 @@ const ProductPage = async ({
               <Rating product={product} />
             </div>
             <span className="text-sm text-muted-foreground">
-              ({reviews?.length} نظر)
+              ({reviews?.length.toLocaleString("fa-IR")} نظر)
             </span>
           </div>
 
           <div className="flex flex-col text-2xl font-bold mb-6">
             {sale_price && sale_price < price ? (
-              <>
-                <span className="text-lg font-semibold text-slate-800">
-                  {formatPrice(sale_price)} تومان
-                </span>
-                <span className="text-sm text-gray-500 line-through">
-                  {formatPrice(price)} تومان
-                </span>
-              </>
+              <div className="flex items-center">
+                <div className="flex flex-col">
+                  <span className="text-lg font-semibold text-slate-800">
+                    {formatPrice(sale_price)} تومان
+                  </span>
+                  <span className="text-sm text-gray-500 line-through">
+                    {formatPrice(price)} تومان
+                  </span>
+                </div>
+
+                <Badge variant="secondary" className="mr-4">
+                  {discount?.toLocaleString("fa-IR")}% تخفیف
+                </Badge>
+              </div>
             ) : (
               <span className="text-lg font-semibold text-slate-800">
                 {formatPrice(price)} تومان
@@ -131,8 +138,16 @@ const ProductPage = async ({
           <h2 className="text-muted-foreground mb-6">{description}</h2>
 
           <div className="flex gap-4 mt-auto">
-            <AddToCartButton product={product} />
-            <Button variant="outline">افزودن به علاقه‌مندی‌ها</Button>
+            <AddToCartButton
+              cart={{
+                product,
+              }}
+            />
+            <Button variant="outline" className="flex-1 cursor-default">
+              {in_stock
+                ? `${in_stock.toLocaleString("fa-IR")} باقی مانده`
+                : "ناموجود"}
+            </Button>
           </div>
 
           <div className="border-t border-border mt-8 pt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">

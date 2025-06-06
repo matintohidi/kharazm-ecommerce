@@ -1,4 +1,4 @@
-import { Tab } from "@/components/types/tab.type";
+import { Tab } from "@/types/tab.type";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface ProductTabsProps {

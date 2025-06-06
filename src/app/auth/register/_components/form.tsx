@@ -18,7 +18,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCookies } from "react-cookie";
-import { useUser } from "@/components/user-provider";
+import { useUser } from "@/providers/user-provider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useRegister } from "@/app/auth/register/_api/register";

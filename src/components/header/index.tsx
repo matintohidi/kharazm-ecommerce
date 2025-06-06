@@ -1,5 +1,5 @@
 "use client";
-import { useCart } from "@/components/cart-provider";
+import { useCart } from "@/providers/cart";
 import { cn } from "@/lib/utils";
 import { X, ShoppingCart } from "lucide-react";
 import Link from "next/link";
@@ -62,7 +62,7 @@ export default function Header() {
   }, [pathname]);
 
   const cartItemsCount = cart.items.reduce(
-    (count, item) => count + item.quantity,
+    (count, item) => count + (item.quantity || 0),
     0
   );
 

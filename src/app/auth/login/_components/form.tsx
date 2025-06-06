@@ -18,7 +18,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCookies } from "react-cookie";
-import { useUser } from "@/components/user-provider";
+import { useUser } from "@/providers/user-provider";
 import { useLogin } from "@/app/auth/login/_api/login";
 import { User } from "@/lib/services";
 
@@ -45,7 +45,6 @@ export const LoginForm = () => {
   const login = useLogin({
     onSuccess: (data) => {
       const { username, email, first_name, last_name, token } = data;
-      console.log(data);
       setCookie("token", token);
 
       setUser({

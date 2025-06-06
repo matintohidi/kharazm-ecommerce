@@ -10,48 +10,6 @@
  * ---------------------------------------------------------------
  */
 
-export interface PublicProduct {
-  /**
-   * Name
-   * @minLength 1
-   * @maxLength 100
-   */
-  name?: string;
-  /** Sale price */
-  sale_price?: number;
-  /**
-   * Token
-   * @minLength 1
-   * @maxLength 50
-   */
-  token?: string;
-}
-
-export interface Cart {
-  /**
-   * Product token
-   * @minLength 1
-   * @maxLength 100
-   */
-  product_token: string;
-  /**
-   * Quantity
-   * @min -9223372036854776000
-   * @max 9223372036854776000
-   */
-  quantity?: number;
-  product?: PublicProduct;
-}
-
-export interface Category {
-  /**
-   * Name
-   * @minLength 1
-   * @maxLength 50
-   */
-  name: string;
-}
-
 export interface PublicCategory {
   /**
    * Name
@@ -68,6 +26,18 @@ export interface PublicUser {
    * @maxLength 100
    */
   username?: string;
+  /**
+   * First name
+   * @minLength 1
+   * @maxLength 100
+   */
+  first_name?: string;
+  /**
+   * Last name
+   * @minLength 1
+   * @maxLength 100
+   */
+  last_name?: string;
   /**
    * Email
    * @minLength 1
@@ -133,6 +103,48 @@ export interface Product {
   reviews?: PublicReview[];
 }
 
+export interface CartList {
+  product?: Product;
+  /**
+   * Quantity
+   * @min -9223372036854776000
+   * @max 9223372036854776000
+   */
+  quantity?: number;
+}
+
+export interface CartCreate {
+  /**
+   * Product token
+   * @minLength 1
+   * @maxLength 100
+   */
+  product_token: string;
+  /**
+   * Quantity
+   * @min -9223372036854776000
+   * @max 9223372036854776000
+   */
+  quantity?: number;
+}
+
+export interface CartInput {
+  /**
+   * Product token
+   * @minLength 1
+   */
+  product_token: string;
+}
+
+export interface Category {
+  /**
+   * Name
+   * @minLength 1
+   * @maxLength 50
+   */
+  name: string;
+}
+
 export interface Order {
   user?: PublicUser;
   /**
@@ -159,6 +171,12 @@ export interface Order {
    * @maxLength 50
    */
   status?: string;
+  /**
+   * Postal code
+   * @min -9223372036854776000
+   * @max 9223372036854776000
+   */
+  postal_code?: number | null;
   /** Cart */
   cart?: string;
   /**
@@ -241,6 +259,15 @@ export interface AuthToken {
    * @minLength 1
    */
   token?: string;
+}
+
+export interface TokenResponse {
+  /**
+   * Token
+   * @minLength 1
+   */
+  token?: string;
+  user?: PublicUser;
 }
 
 export type QueryParamsType = Record<string | number, any>;
@@ -522,7 +549,7 @@ export class Api<
      * @secure
      */
     cartList: (params: RequestParams = {}) =>
-      this.request<Cart[], any>({
+      this.request<CartList[], any>({
         path: `/cart/`,
         method: "GET",
         secure: true,
@@ -538,8 +565,8 @@ export class Api<
      * @request POST:/cart/add/
      * @secure
      */
-    cartAddCreate: (data: Cart, params: RequestParams = {}) =>
-      this.request<Cart, any>({
+    cartAddCreate: (data: CartCreate, params: RequestParams = {}) =>
+      this.request<CartCreate, any>({
         path: `/cart/add/`,
         method: "POST",
         body: data,
@@ -573,11 +600,13 @@ export class Api<
      * @request DELETE:/cart/decrease/
      * @secure
      */
-    cartDecreaseDelete: (params: RequestParams = {}) =>
-      this.request<void, any>({
+    cartDecreaseDelete: (data: CartInput, params: RequestParams = {}) =>
+      this.request<void, void>({
         path: `/cart/decrease/`,
         method: "DELETE",
+        body: data,
         secure: true,
+        type: ContentType.Json,
         ...params,
       }),
 
@@ -589,11 +618,13 @@ export class Api<
      * @request PATCH:/cart/update/
      * @secure
      */
-    cartUpdatePartialUpdate: (params: RequestParams = {}) =>
-      this.request<void, any>({
+    cartUpdatePartialUpdate: (data: CartInput, params: RequestParams = {}) =>
+      this.request<void, void>({
         path: `/cart/update/`,
         method: "PATCH",
+        body: data,
         secure: true,
+        type: ContentType.Json,
         ...params,
       }),
   };
@@ -713,10 +744,11 @@ export class Api<
      * @secure
      */
     productsList: (params: RequestParams = {}) =>
-      this.request<void, any>({
+      this.request<Product[], any>({
         path: `/products/`,
         method: "GET",
         secure: true,
+        format: "json",
         ...params,
       }),
 
@@ -787,10 +819,11 @@ export class Api<
      * @secure
      */
     searchList: (params: RequestParams = {}) =>
-      this.request<void, any>({
+      this.request<Product[], any>({
         path: `/search/`,
         method: "GET",
         secure: true,
+        format: "json",
         ...params,
       }),
   };
@@ -804,7 +837,7 @@ export class Api<
      * @secure
      */
     tokenCreate: (data: AuthToken, params: RequestParams = {}) =>
-      this.request<AuthToken, any>({
+      this.request<TokenResponse, any>({
         path: `/token/`,
         method: "POST",
         body: data,

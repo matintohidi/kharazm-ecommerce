@@ -1,5 +1,4 @@
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { PublicReview } from "@/lib/services";
 import { Star } from "lucide-react";
 
@@ -14,7 +13,9 @@ const Review = ({ review }: ReviewProps) => {
     <div className="first:border-t-0 border-t last:border-b border-border p-4 flex flex-col">
       <div className="flex items-center gap-2">
         <h3 className="text-xs font-light text-muted-foreground">
-          {user.username}
+          {user.first_name && user.last_name
+            ? `${user.first_name} ${user.last_name}`
+            : user.username}
         </h3>
         <Badge variant="secondary">کاربر</Badge>
       </div>

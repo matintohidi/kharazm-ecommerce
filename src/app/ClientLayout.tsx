@@ -3,10 +3,10 @@ import type React from "react";
 import { usePathname } from "next/navigation";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import { CartProvider } from "@/components/cart-provider";
+import { CartProvider } from "@/providers/cart";
 import { Toaster } from "@/components/ui/toaster";
 import { CookiesProvider } from "react-cookie";
-import { UserProvider } from "@/components/user-provider";
+import { UserProvider } from "@/providers/user-provider";
 import QueryProvider from "@/providers/react-query-provider";
 
 export default function ClientLayout({

@@ -1,30 +1,30 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Textarea } from "@/components/ui/textarea"
-import { useCart } from "@/components/cart-provider"
-import { formatPrice } from "@/lib/utils"
-import { useToast } from "@/hooks/use-toast"
-import { CreditCard, Landmark, Wallet } from "lucide-react"
-import Image from "next/image"
-import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Textarea } from "@/components/ui/textarea";
+import { useCart } from "@/providers/cart";
+import { formatPrice } from "@/lib/utils";
+import { useToast } from "@/hooks/use-toast";
+import { CreditCard, Landmark, Wallet } from "lucide-react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function CheckoutPage() {
-  const { cart, clearCart } = useCart()
-  const { toast } = useToast()
-  const router = useRouter()
-  const [mounted, setMounted] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const { cart, clearCart } = useCart();
+  const { toast } = useToast();
+  const router = useRouter();
+  const [mounted, setMounted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
   if (!mounted) {
     return (
@@ -34,33 +34,36 @@ export default function CheckoutPage() {
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
         </div>
       </div>
-    )
+    );
   }
 
   if (cart.items.length === 0) {
-    router.push("/cart")
-    return null
+    router.push("/cart");
+    return null;
   }
 
-  const subtotal = cart.items.reduce((total, item) => total + item.price * item.quantity, 0)
-  const shipping = subtotal > 500000 ? 0 : 30000
-  const total = subtotal + shipping
+  const subtotal = cart.items.reduce(
+    (total, item) =>
+      total + (item.product?.sale_price || 0) * (item?.quantity || 0),
+    0
+  );
+  const shipping = subtotal > 500000 ? 0 : 30000;
+  const total = subtotal + shipping;
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+    e.preventDefault();
+    setIsSubmitting(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
     toast({
       title: "سفارش با موفقیت ثبت شد",
       description: "سفارش شما با موفقیت ثبت شد و در حال پردازش است.",
-    })
+    });
 
-    clearCart()
-    router.push("/checkout/success")
-  }
+    clearCart();
+    router.push("/checkout/success");
+  };
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
@@ -69,7 +72,6 @@ export default function CheckoutPage() {
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
-            {/* Shipping Information */}
             <div className="bg-background rounded-lg border shadow-sm p-6">
               <h2 className="text-xl font-semibold mb-6">اطلاعات ارسال</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -104,7 +106,6 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            {/* Payment Method */}
             <div className="bg-background rounded-lg border shadow-sm p-6">
               <h2 className="text-xl font-semibold mb-6">روش پرداخت</h2>
               <RadioGroup defaultValue="online">
@@ -139,20 +140,35 @@ export default function CheckoutPage() {
 
               <div className="max-h-80 overflow-y-auto mb-4">
                 {cart.items.map((item) => (
-                  <div key={item.id} className="flex gap-4 py-3 border-b last:border-0">
+                  <div
+                    key={item.product?.token}
+                    className="flex gap-4 py-3 border-b last:border-0"
+                  >
                     <div className="relative h-16 w-16 rounded-md overflow-hidden bg-muted shrink-0">
                       <Image
-                        src={item.image || "/placeholder.svg?height=100&width=100"}
-                        alt={item.name}
+                        src={
+                          item.product?.image ||
+                          "/placeholder.svg?height=100&width=100"
+                        }
+                        alt={item.product?.token || ""}
                         fill
                         className="object-cover"
                       />
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-medium text-sm">{item.name}</h3>
-                      <p className="text-xs text-muted-foreground">تعداد: {item.quantity}</p>
+                      <h3 className="font-medium text-sm">
+                        {item.product?.name}
+                      </h3>
+                      <p className="text-xs text-muted-foreground">
+                        تعداد: {item.quantity}
+                      </p>
                     </div>
-                    <div className="text-left font-medium text-sm">{formatPrice(item.price * item.quantity)} تومان</div>
+                    <div className="text-left font-medium text-sm">
+                      {formatPrice(
+                        (item.product?.sale_price || 0) * (item?.quantity || 0)
+                      )}{" "}
+                      تومان
+                    </div>
                   </div>
                 ))}
               </div>
@@ -164,13 +180,22 @@ export default function CheckoutPage() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">هزینه ارسال</span>
-                  <span>{shipping === 0 ? "رایگان" : `${formatPrice(shipping)} تومان`}</span>
+                  <span>
+                    {shipping === 0
+                      ? "رایگان"
+                      : `${formatPrice(shipping)} تومان`}
+                  </span>
                 </div>
                 <div className="border-t pt-4 flex justify-between font-medium">
                   <span>مجموع</span>
                   <span>{formatPrice(total)} تومان</span>
                 </div>
-                <Button className="w-full" size="lg" type="submit" disabled={isSubmitting}>
+                <Button
+                  className="w-full"
+                  size="lg"
+                  type="submit"
+                  disabled={isSubmitting}
+                >
                   {isSubmitting ? "در حال پردازش..." : "پرداخت و ثبت سفارش"}
                 </Button>
                 <div className="text-center text-sm text-muted-foreground">
@@ -182,5 +207,5 @@ export default function CheckoutPage() {
         </div>
       </form>
     </div>
-  )
+  );
 }

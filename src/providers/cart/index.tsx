@@ -4,11 +4,11 @@ import type React from "react";
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { Product } from "@/lib/services";
+import { CartList } from "@/lib/services";
+import { useGetCart } from "@/providers/cart/api/cart";
+import { useCookies } from "react-cookie";
 
-export interface CartItem extends Product {
-  quantity: number;
-}
+export interface CartItem extends CartList {}
 
 interface CartState {
   items: CartItem[];
@@ -16,9 +16,10 @@ interface CartState {
 
 interface CartContextType {
   cart: CartState;
-  addToCart: (product: Omit<CartItem, "quantity">) => void;
-  removeFromCart: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
+  isPending?: boolean;
+  addToCart: (cart: CartList) => void;
+  removeFromCart: (productToken: string) => void;
+  updateQuantity: (productToken: string, quantity: number) => void;
   clearCart: () => void;
 }
 
@@ -27,85 +28,85 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const { toast } = useToast();
   const [cart, setCart] = useState<CartState>({ items: [] });
-  const [mounted, setMounted] = useState(false);
+  const [cookies] = useCookies(["token"]);
 
-  // Load cart from localStorage on mount
+  const getCart = useGetCart({
+    token: cookies.token,
+  });
+
   useEffect(() => {
-    try {
-      const storedCart = localStorage.getItem("cart");
-      if (storedCart) {
-        setCart(JSON.parse(storedCart));
+    setCart(() => {
+      if (getCart.data) {
+        return {
+          items: getCart.data,
+        };
       }
-    } catch (error) {
-      console.error("Failed to load cart from localStorage:", error);
-    }
-    setMounted(true);
-  }, []);
 
-  // Save cart to localStorage when it changes
-  useEffect(() => {
-    if (mounted) {
-      localStorage.setItem("cart", JSON.stringify(cart));
-    }
-  }, [cart, mounted]);
+      return { items: [] };
+    });
+  }, [getCart.data]);
 
-  const addToCart = (product: Omit<CartItem, "quantity">) => {
+  const addToCart = (cart: CartList) => {
+    console.log(cart);
+
     setCart((prevCart) => {
       const existingItem = prevCart.items.find(
-        (item) => item.token === product.token
+        (item) => item.product?.token === cart.product?.token
       );
 
       if (existingItem) {
-        // If item already exists, increase quantity
         const updatedItems = prevCart.items.map((item) =>
-          item.token === product.token
-            ? { ...item, quantity: item.quantity + 1 }
+          item.product?.token === cart.product?.token
+            ? { ...item, quantity: (item.quantity || 0) + 1 }
             : item
         );
 
         toast({
           title: "محصول به سبد خرید اضافه شد",
-          description: `تعداد ${product.name} افزایش یافت.`,
+          description: `تعداد ${cart.product?.name} افزایش یافت.`,
         });
 
         return { ...prevCart, items: updatedItems };
       } else {
-        // Add new item with quantity 1
         toast({
           title: "محصول به سبد خرید اضافه شد",
-          description: `${product.name} به سبد خرید اضافه شد.`,
+          description: `${cart.product?.name} به سبد خرید اضافه شد.`,
         });
 
         return {
           ...prevCart,
-          items: [...prevCart.items, { ...product, quantity: 1 }],
+          items: [...prevCart.items, { ...cart, quantity: 1 }],
         };
       }
     });
   };
 
-  const removeFromCart = (productId: string) => {
+  const removeFromCart = (productToken: string) => {
     setCart((prevCart) => {
-      const item = prevCart.items.find((item) => item.token === productId);
+      const item = prevCart.items.find(
+        (item) => item.product?.token === productToken
+      );
 
       if (item) {
         toast({
           title: "محصول از سبد خرید حذف شد",
-          description: `${item.name} از سبد خرید حذف شد.`,
+          description: `${item.product?.name} از سبد خرید حذف شد.`,
         });
       }
 
       return {
         ...prevCart,
-        items: prevCart.items.filter((item) => item.token !== productId),
+        items: prevCart.items.filter(
+          (item) => item.product?.token !== productToken
+        ),
       };
     });
   };
 
-  const updateQuantity = (productId: string, quantity: number) => {
+  const updateQuantity = (productToken: string, quantity: number) => {
     setCart((prevCart) => {
       const updatedItems = prevCart.items.map((item) =>
-        item.token === productId ? { ...item, quantity } : item
+        item.product?.token === productToken ? { ...item, quantity } : item
       );
       return { ...prevCart, items: updatedItems };
     });
@@ -117,7 +118,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart }}
+      value={{
+        cart,
+        isPending: getCart.isPending,
+        addToCart,
+        removeFromCart,
+        updateQuantity,
+        clearCart,
+      }}
     >
       {children}
     </CartContext.Provider>

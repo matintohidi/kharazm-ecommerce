@@ -3,12 +3,36 @@
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/providers/cart";
 import { formatPrice } from "@/lib/utils";
-import { Minus, Plus, Trash2 } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
+import CartCard from "@/app/cart/_components/cart-card";
+import { Trash2 } from "lucide-react";
+import { useClearCart } from "@/app/cart/_api/cart";
+import { useCookies } from "react-cookie";
+import { useToast } from "@/hooks/use-toast";
 
 export default function CartPage() {
-  const { cart, updateQuantity, removeFromCart } = useCart();
+  const { cart, isPending, removeFromCart } = useCart();
+  const { toast } = useToast();
+  const [cookies] = useCookies(["token"]);
+
+  const clearCart = useClearCart({
+    onSuccess: () => {
+      cart.items.forEach((item) => {
+        removeFromCart(item.product?.token || "");
+
+        toast({
+          title: "محصول از سبد خرید حذف شد",
+          description: `${item.product?.name} از سبد خرید حذف شد.`,
+        });
+      });
+    },
+  });
+
+  const handleClearCart = () => {
+    clearCart.clear({
+      token: cookies.token,
+    });
+  };
 
   if (cart.items.length === 0) {
     return (
@@ -37,7 +61,18 @@ export default function CartPage() {
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
-      <h1 className="text-3xl font-bold mb-8">سبد خرید</h1>
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-3xl font-bold">سبد خرید</h1>
+
+        <button
+          className="text-red-500 border-2 border-red-200 hover:bg-red-50 flex items-center justify-center rounded-sm transition p-2"
+          aria-label="حذف از سبد خرید"
+          onClick={handleClearCart}
+        >
+          <Trash2 className="h-4 w-4" />
+          <span className="mr-2 text-xs	font-light">حذف همه اقلام</span>
+        </button>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
@@ -46,75 +81,10 @@ export default function CartPage() {
               <h2 className="text-xl font-semibold mb-4">محصولات</h2>
               <div className="divide-y">
                 {cart.items.map((item) => (
-                  <div
-                    key={item.product?.token}
-                    className="py-6 flex flex-col sm:flex-row gap-4"
-                  >
-                    <div className="relative h-24 w-24 rounded-md overflow-hidden bg-muted">
-                      <Image
-                        src={
-                          item.product?.image ||
-                          "/placeholder.svg?height=200&width=200"
-                        }
-                        alt={item.product?.name || ""}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-medium">{item.product?.name}</h3>
-                      <p className="text-sm text-muted-foreground mb-2">
-                        {(item.product?.sale_price || 0).toLocaleString(
-                          "fa-IR"
-                        )}{" "}
-                        تومان
-                      </p>
-                      <div className="flex items-center gap-4">
-                        <div className="flex items-center border rounded-md">
-                          <button
-                            onClick={() =>
-                              updateQuantity(
-                                item.product?.token || "",
-                                Math.max(1, (item.quantity || 0) - 1)
-                              )
-                            }
-                            className="p-1 hover:bg-muted"
-                            aria-label="کاهش تعداد"
-                          >
-                            <Minus className="h-4 w-4" />
-                          </button>
-                          <span className="px-3 py-1">{item.quantity}</span>
-                          <button
-                            onClick={() =>
-                              updateQuantity(
-                                item.product?.token || "",
-                                (item.quantity || 0) + 1
-                              )
-                            }
-                            className="p-1 hover:bg-muted"
-                            aria-label="افزایش تعداد"
-                          >
-                            <Plus className="h-4 w-4" />
-                          </button>
-                        </div>
-                        <button
-                          onClick={() =>
-                            removeFromCart(item.product?.token || "")
-                          }
-                          className="text-red-500 hover:text-red-700"
-                          aria-label="حذف از سبد خرید"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </button>
-                      </div>
-                    </div>
-                    <div className="text-left font-medium">
-                      {formatPrice(
-                        (item.product?.sale_price || 0) * (item.quantity || 0)
-                      )}{" "}
-                      تومان
-                    </div>
-                  </div>
+                  <CartCard
+                    key={item.product?.token || "" + item.product?.category}
+                    cart={item}
+                  />
                 ))}
               </div>
             </div>

@@ -6,6 +6,7 @@ import { useUser } from "@/providers/user-provider";
 import { useToast } from "@/hooks/use-toast";
 import { Product, Review } from "@/lib/services";
 import { useCookies } from "react-cookie";
+import { useEffect, useState } from "react";
 
 interface RatingProps {
   product: Product;
@@ -16,6 +17,7 @@ export const Rating = ({ product }: RatingProps) => {
   const { user } = useUser();
   const [cookies] = useCookies(["token"]);
   const { toast } = useToast();
+  const [shouldToast, setShouldToast] = useState(false);
 
   let avgReview =
     reviews && reviews.length > 0
@@ -24,12 +26,19 @@ export const Rating = ({ product }: RatingProps) => {
 
   const rating = useRating({
     onSuccess: () => {
+      setShouldToast(true);
+    },
+  });
+
+  useEffect(() => {
+    if (shouldToast) {
       toast({
         title: "موفق",
         description: "نظر شما با موفقیت ثبت شد.",
       });
-    },
-  });
+      setShouldToast(false);
+    }
+  }, [shouldToast]);
 
   const handleStarClick = async (index: number) => {
     if (!token) return;

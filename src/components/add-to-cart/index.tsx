@@ -28,6 +28,11 @@ export function AddToCartButton({
   const addProductToCart = useAddToCart({
     onSuccess: (data) => {
       addToCart(data);
+
+      toast({
+        title: "محصول به سبد خرید اضافه شد",
+        description: `${cart.product?.name} به سبد خرید اضافه شد.`,
+      });
     },
   });
 

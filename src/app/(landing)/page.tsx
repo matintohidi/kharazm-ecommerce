@@ -10,9 +10,10 @@ import Link from "next/link";
 import { Api } from "@/lib/api";
 import { Product } from "@/lib/services";
 import { BestProductCard } from "@/app/(landing)/_components/bestProductCard";
+import { API_URL } from "@/configs/app.config";
 
 async function getBestProducts() {
-  const res = await Api.products.productsList({
+  const res = await fetch(`${API_URL}/products/`, {
     cache: "no-store",
   });
 

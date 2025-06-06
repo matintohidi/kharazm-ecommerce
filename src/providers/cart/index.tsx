@@ -1,9 +1,7 @@
 "use client";
 
 import type React from "react";
-
 import { createContext, useContext, useEffect, useState } from "react";
-import { useToast } from "@/hooks/use-toast";
 import { CartList } from "@/lib/services";
 import { useGetCart } from "@/providers/cart/api/cart";
 import { useCookies } from "react-cookie";
@@ -26,29 +24,22 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const { toast } = useToast();
   const [cart, setCart] = useState<CartState>({ items: [] });
   const [cookies] = useCookies(["token"]);
 
   const getCart = useGetCart({
     token: cookies.token,
   });
+  const [cartInitialized, setCartInitialized] = useState(false);
 
   useEffect(() => {
-    setCart(() => {
-      if (getCart.data) {
-        return {
-          items: getCart.data,
-        };
-      }
-
-      return { items: [] };
-    });
-  }, [getCart.data]);
+    if (!cartInitialized && getCart.data) {
+      setCart({ items: getCart.data });
+      setCartInitialized(true);
+    }
+  }, [getCart.data, cartInitialized]);
 
   const addToCart = (cart: CartList) => {
-    console.log(cart);
-
     setCart((prevCart) => {
       const existingItem = prevCart.items.find(
         (item) => item.product?.token === cart.product?.token
@@ -61,18 +52,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             : item
         );
 
-        toast({
-          title: "محصول به سبد خرید اضافه شد",
-          description: `تعداد ${cart.product?.name} افزایش یافت.`,
-        });
-
         return { ...prevCart, items: updatedItems };
       } else {
-        toast({
-          title: "محصول به سبد خرید اضافه شد",
-          description: `${cart.product?.name} به سبد خرید اضافه شد.`,
-        });
-
         return {
           ...prevCart,
           items: [...prevCart.items, { ...cart, quantity: 1 }],
@@ -83,16 +64,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const removeFromCart = (productToken: string) => {
     setCart((prevCart) => {
-      const item = prevCart.items.find(
-        (item) => item.product?.token === productToken
-      );
+      // const item = prevCart.items.find(
+      //   (item) => item.product?.token === productToken
+      // );
 
-      if (item) {
-        toast({
-          title: "محصول از سبد خرید حذف شد",
-          description: `${item.product?.name} از سبد خرید حذف شد.`,
-        });
-      }
+      // if (item) {
+      // toast({
+      //   title: "محصول از سبد خرید حذف شد",
+      //   description: `${item.product?.name} از سبد خرید حذف شد.`,
+      // });
+      // }
 
       return {
         ...prevCart,

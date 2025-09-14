@@ -5,51 +5,120 @@ import Link from "next/link";
 export default function AboutPage() {
   const teamMembers = [
     {
-      id: 1,
-      name: "علی محمدی",
-      position: "مدیر عامل",
-      bio: "علی بیش از ۱۵ سال تجربه در زمینه تجارت الکترونیک و مدیریت کسب و کار دارد. او بنیانگذار خوارزم است و چشم‌انداز اصلی شرکت را شکل داده است.",
-      image: "/placeholder.svg?height=400&width=400&text=علی+محمدی",
+      id: 0,
+      name: "متین توحیدی ثانی",
+      position: "عضو تیم",
+      bio: "متین یکی از اعضای پرتلاش تیم خوارزم است و در پیشبرد اهداف مجموعه نقش مهمی دارد.",
+      image:
+        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       social: {
         linkedin: "https://linkedin.com",
         twitter: "https://twitter.com",
-        email: "ali@kharazm.com",
+        email: "mohammadreza@kharazm.com",
+      },
+    },
+    {
+      id: 1,
+      name: "مححمد رضا باغجری",
+      position: "عضو تیم",
+      bio: "مححمد رضا یکی از اعضای پرتلاش تیم خوارزم است و در پیشبرد اهداف مجموعه نقش مهمی دارد.",
+      image:
+        "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      social: {
+        linkedin: "https://linkedin.com",
+        twitter: "https://twitter.com",
+        email: "mohammadreza@kharazm.com",
       },
     },
     {
       id: 2,
-      name: "سارا احمدی",
-      position: "مدیر فنی",
-      bio: "سارا متخصص در زمینه توسعه وب و مدیریت تیم‌های فنی است. او مسئول توسعه و نگهداری پلتفرم خوارزم و زیرساخت‌های فنی آن است.",
-      image: "/placeholder.svg?height=400&width=400&text=سارا+احمدی",
+      name: "پارسا رضاپور",
+      position: "عضو تیم",
+      bio: "پارسا با تخصص خود در زمینه فناوری اطلاعات، به بهبود فرآیندهای فنی خوارزم کمک می‌کند.",
+      image:
+        "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       social: {
         linkedin: "https://linkedin.com",
         twitter: "https://twitter.com",
-        email: "sara@kharazm.com",
+        email: "parsa@kharazm.com",
       },
     },
     {
       id: 3,
-      name: "محمد حسینی",
-      position: "مدیر بازاریابی",
-      bio: "محمد با بیش از ۱۰ سال تجربه در زمینه بازاریابی دیجیتال، استراتژی‌های بازاریابی و برندینگ خوارزم را هدایت می‌کند.",
-      image: "/placeholder.svg?height=400&width=400&text=محمد+حسینی",
+      name: "ژیار ملاامینی",
+      position: "عضو تیم",
+      bio: "ژیار با روحیه همکاری و خلاقیت، نقش موثری در توسعه محصولات خوارزم ایفا می‌کند.",
+      image:
+        "https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       social: {
         linkedin: "https://linkedin.com",
         twitter: "https://twitter.com",
-        email: "mohammad@kharazm.com",
+        email: "zhiyar@kharazm.com",
       },
     },
     {
       id: 4,
-      name: "زهرا کریمی",
-      position: "مدیر تجربه مشتری",
-      bio: "زهرا مسئول بهبود تجربه مشتریان و ارائه خدمات پس از فروش است. او با تمرکز بر رضایت مشتری، کیفیت خدمات خوارزم را تضمین می‌کند.",
-      image: "/placeholder.svg?height=400&width=400&text=زهرا+کریمی",
+      name: "مبین ابراهیم خانی",
+      position: "عضو تیم",
+      bio: "مبین با دانش فنی خود، در ارتقای کیفیت خدمات و محصولات خوارزم نقش کلیدی دارد.",
+      image:
+        "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       social: {
         linkedin: "https://linkedin.com",
         twitter: "https://twitter.com",
-        email: "zahra@kharazm.com",
+        email: "mobin@kharazm.com",
+      },
+    },
+    {
+      id: 5,
+      name: "علیرضا شکاری",
+      position: "عضو تیم",
+      bio: "علیرضا با تلاش و پشتکار، همواره به دنبال ارائه بهترین راهکارها برای مشتریان است.",
+      image:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      social: {
+        linkedin: "https://linkedin.com",
+        twitter: "https://twitter.com",
+        email: "alireza@kharazm.com",
+      },
+    },
+    {
+      id: 6,
+      name: "آرمین قاسمی",
+      position: "عضو تیم",
+      bio: "آرمین با تخصص در حوزه فناوری، به توسعه و پیشرفت پلتفرم خوارزم کمک می‌کند.",
+      image:
+        "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?q=80&w=689&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      social: {
+        linkedin: "https://linkedin.com",
+        twitter: "https://twitter.com",
+        email: "armin@kharazm.com",
+      },
+    },
+    {
+      id: 7,
+      name: "امین صفری",
+      position: "عضو تیم",
+      bio: "امین با روحیه مسئولیت‌پذیری، در بهبود تجربه مشتریان و ارتقای خدمات نقش دارد.",
+      image:
+        "https://images.unsplash.com/photo-1534308143481-c55f00be8bd7?q=80&w=1930&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      social: {
+        linkedin: "https://linkedin.com",
+        twitter: "https://twitter.com",
+        email: "amin@kharazm.com",
+      },
+    },
+    {
+      id: 8,
+      name: "ایمان ارباب",
+      position: "عضو تیم",
+      bio: "ایمان با دانش و تجربه خود، در پیشبرد پروژه‌های خوارزم نقش موثری ایفا می‌کند.",
+      image:
+        "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      social: {
+        linkedin: "https://linkedin.com",
+        twitter: "https://twitter.com",
+        email: "iman@kharazm.com",
       },
     },
   ];
@@ -174,7 +243,7 @@ export default function AboutPage() {
                   <p className="text-muted-foreground text-sm mb-4">
                     {member.bio}
                   </p>
-                  <div className="flex space-x-3 space-x-reverse">
+                  <div className="flex gap-x-3">
                     <Link
                       href={member.social.linkedin}
                       className="text-muted-foreground hover:text-primary"

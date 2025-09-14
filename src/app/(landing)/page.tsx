@@ -7,9 +7,9 @@ import {
   Calendar,
 } from "lucide-react";
 import Link from "next/link";
-import { Api } from "@/lib/api";
 import { Product } from "@/lib/services";
 import { BestProductCard } from "@/app/(landing)/_components/bestProductCard";
+import { CountdownTimer } from "@/components/countdown-timer";
 import { API_URL } from "@/configs/app.config";
 
 async function getBestProducts() {
@@ -22,6 +22,11 @@ async function getBestProducts() {
 
 export default async function Home() {
   const featuredProducts: Product[] = await getBestProducts();
+
+  // Calculate target date: 1 day and 8 hours from now
+  const targetDate = new Date();
+  targetDate.setDate(targetDate.getDate() + 1);
+  targetDate.setHours(targetDate.getHours() + 8);
 
   return (
     <main className="flex-1">
@@ -59,49 +64,7 @@ export default async function Home() {
               </div>
             </div>
 
-            <div className="flex items-center justify-center lg:justify-start gap-2 sm:gap-4 lg:gap-[52px] font-bold text-white mt-6 sm:mt-8 lg:mt-[52px] mb-8 sm:mb-12 lg:mb-16 text-base sm:text-2xl lg:text-5xl tracking-tight lg:tracking-[-0.96px] overflow-x-auto">
-              <div className="flex flex-col items-center gap-1 lg:gap-3 shrink-0">
-                <div className="flex items-center justify-center rounded-lg border border-white/30 px-2 sm:px-3 lg:px-4 py-1 sm:py-2 lg:py-3 tabular-nums min-w-[35px] sm:min-w-[45px] lg:min-w-[60px]">
-                  ۵۴
-                </div>
-                <p className="text-xs sm:text-sm lg:text-base font-normal uppercase text-white">
-                  ثانیه
-                </p>
-              </div>
-              <div className="font-bold text-white text-base sm:text-2xl lg:text-5xl shrink-0">
-                :
-              </div>
-              <div className="flex flex-col items-center gap-1 lg:gap-3 shrink-0">
-                <div className="flex items-center justify-center rounded-lg border border-white/30 px-2 sm:px-3 lg:px-4 py-1 sm:py-2 lg:py-3 tabular-nums min-w-[35px] sm:min-w-[45px] lg:min-w-[60px]">
-                  ۱۶
-                </div>
-                <p className="text-xs sm:text-sm lg:text-base font-normal uppercase text-white">
-                  دقیقه
-                </p>
-              </div>
-              <div className="font-bold text-white text-base sm:text-2xl lg:text-5xl shrink-0">
-                :
-              </div>
-              <div className="flex flex-col items-center gap-1 lg:gap-3 shrink-0">
-                <div className="flex items-center justify-center rounded-lg border border-white/30 px-2 sm:px-3 lg:px-4 py-1 sm:py-2 lg:py-3 tabular-nums min-w-[35px] sm:min-w-[45px] lg:min-w-[60px]">
-                  ۰۳
-                </div>
-                <p className="text-xs sm:text-sm lg:text-base font-normal uppercase text-white">
-                  ساعت
-                </p>
-              </div>
-              <div className="font-bold text-white text-base sm:text-2xl lg:text-5xl shrink-0">
-                :
-              </div>
-              <div className="flex flex-col items-center gap-1 lg:gap-3 shrink-0">
-                <div className="flex items-center justify-center rounded-lg border border-white/30 px-2 sm:px-3 lg:px-4 py-1 sm:py-2 lg:py-3 tabular-nums min-w-[35px] sm:min-w-[45px] lg:min-w-[60px]">
-                  ۱۰
-                </div>
-                <p className="text-xs sm:text-sm lg:text-base font-normal uppercase text-white">
-                  روز
-                </p>
-              </div>
-            </div>
+            <CountdownTimer targetDate={targetDate} />
           </div>
 
           <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:gap-8 text-center lg:text-right mt-8 lg:mt-0 lg:mr-8 xl:mr-16 shrink-0 lg:min-w-[250px] xl:min-w-[300px]">

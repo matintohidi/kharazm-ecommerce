@@ -5,6 +5,8 @@ import { X, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import { useUser } from "@/providers/user-provider";
+import HeaderUser from "./header-user";
 
 const mainNav = [
   { title: "خانه", href: "/" },
@@ -16,6 +18,7 @@ const mainNav = [
 export default function Header() {
   const pathname = usePathname();
   const { cart } = useCart();
+  const { user, setUser } = useUser();
   const [isTransparent, setIsTransparent] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isHaveBackgroundPage =
@@ -164,30 +167,10 @@ export default function Header() {
               )}
             </Link>
 
-            <div className="hidden sm:flex items-center gap-1.5 lg:gap-2">
-              <Link
-                href="/auth/register"
-                className={cn(
-                  "flex items-center rounded-md px-3 lg:px-6 text-xs lg:text-base font-semibold h-8 lg:h-12 transition-all duration-200",
-                  isTransparent && isHaveBackgroundPage
-                    ? "bg-white text-slate-800 hover:bg-gray-50"
-                    : "bg-primary text-white hover:bg-primary/90"
-                )}
-              >
-                ثبت‌نام
-              </Link>
-              <Link
-                href="/auth/login"
-                className={cn(
-                  "flex items-center rounded-md border px-3 lg:px-6 text-xs lg:text-base font-semibold h-8 lg:h-12 transition-all duration-200",
-                  isTransparent && isHaveBackgroundPage
-                    ? "border-white/30 text-white hover:bg-white/10"
-                    : "border-gray-300 text-slate-800 hover:bg-gray-50"
-                )}
-              >
-                ورود
-              </Link>
-            </div>
+            <HeaderUser
+              isTransparent={isTransparent}
+              isHaveBackgroundPage={isHaveBackgroundPage}
+            />
           </div>
         </div>
       </nav>
@@ -239,23 +222,79 @@ export default function Header() {
             </nav>
 
             <div className="p-4 border-t border-gray-200 space-y-3">
-              {!isAuthPage && (
-                <div className="flex gap-3">
-                  <Link
-                    href="/auth/login"
-                    className="flex-1 py-3 text-center rounded-md border border-primary text-primary hover:bg-primary/5 transition-colors font-medium"
-                    onClick={closeMobileMenu}
-                  >
-                    ورود
-                  </Link>
-                  <Link
-                    href="/auth/register"
-                    className="flex-1 py-3 text-center rounded-md bg-primary text-white hover:bg-primary/90 transition-colors font-medium"
-                    onClick={closeMobileMenu}
-                  >
-                    ثبت‌نام
-                  </Link>
+              {user ? (
+                <div className="space-y-3">
+                  {/* User Info in Mobile */}
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-md">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary text-sm font-semibold">
+                      {user.first_name && user.last_name
+                        ? `${user.first_name.charAt(0)}${user.last_name.charAt(
+                            0
+                          )}`
+                        : user.first_name?.charAt(0) ||
+                          user.username?.charAt(0)}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-900 truncate">
+                        {user.first_name && user.last_name
+                          ? `${user.first_name} ${user.last_name}`
+                          : user.first_name || user.username}
+                      </p>
+                      {user.email && (
+                        <p className="text-xs text-gray-500 truncate">
+                          {user.email}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* User Menu Items in Mobile */}
+                  <div className="space-y-1">
+                    <Link
+                      href="/account"
+                      className="flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md transition-colors"
+                      onClick={closeMobileMenu}
+                    >
+                      حساب کاربری
+                    </Link>
+                    <Link
+                      href="/account/orders"
+                      className="flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md transition-colors"
+                      onClick={closeMobileMenu}
+                    >
+                      سفارش‌های من
+                    </Link>
+                    <button
+                      onClick={() => {
+                        setUser(undefined);
+                        localStorage.removeItem("authToken");
+                        closeMobileMenu();
+                      }}
+                      className="flex items-center gap-3 w-full px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-md transition-colors"
+                    >
+                      خروج
+                    </button>
+                  </div>
                 </div>
+              ) : (
+                !isAuthPage && (
+                  <div className="flex gap-3">
+                    <Link
+                      href="/auth/login"
+                      className="flex-1 py-3 text-center rounded-md border border-primary text-primary hover:bg-primary/5 transition-colors font-medium"
+                      onClick={closeMobileMenu}
+                    >
+                      ورود
+                    </Link>
+                    <Link
+                      href="/auth/register"
+                      className="flex-1 py-3 text-center rounded-md bg-primary text-white hover:bg-primary/90 transition-colors font-medium"
+                      onClick={closeMobileMenu}
+                    >
+                      ثبت‌نام
+                    </Link>
+                  </div>
+                )
               )}
             </div>
           </div>

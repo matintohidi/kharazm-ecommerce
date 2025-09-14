@@ -1,12 +1,12 @@
 import { createData } from "@/core/http-service/http-service";
-import { User } from "@/lib/services";
+import { TokenResponse, User } from "@/lib/services";
 import { useMutation } from "@tanstack/react-query";
 
-const login = (model: User): Promise<User> =>
-  createData<User, User>("/token/", model);
+const login = (model: User): Promise<TokenResponse> =>
+  createData<User, TokenResponse>("/token/", model);
 
 type UserLoginOptions = {
-  onSuccess?: (data: User) => void;
+  onSuccess?: (data: TokenResponse) => void;
 };
 
 export const useLogin = ({ onSuccess }: UserLoginOptions) => {

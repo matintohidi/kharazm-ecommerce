@@ -44,21 +44,31 @@ export const LoginForm = () => {
 
   const login = useLogin({
     onSuccess: (data) => {
-      const { username, email, first_name, last_name, token } = data;
+      const { user, token } = data;
       setCookie("token", token);
 
       setUser({
-        username,
-        email,
-        first_name,
-        last_name,
+        username: user?.username || "",
+        email: user?.email,
+        first_name: user?.first_name,
+        last_name: user?.last_name,
       });
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          username: user?.username || "",
+          email: user?.email || "",
+          first_name: user?.first_name || "",
+          last_name: user?.last_name || "",
+        })
+      );
 
       toast({
         description: "شما با موفقیت وارد حساب کاربری خود شدید.",
       });
 
-      // router.push("/account");
+      router.push("/account");
     },
   });
 

@@ -63,6 +63,16 @@ export const RegisterForm = () => {
         last_name,
       });
 
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          email,
+          username,
+          first_name,
+          last_name,
+        })
+      );
+
       toast({
         description:
           "حساب کاربری شما با موفقیت ایجاد شد. به حساب کاربری خود خوش آمدید!",

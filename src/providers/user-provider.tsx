@@ -1,5 +1,7 @@
 import { User as IUser } from "@/lib/services";
-import { createContext, useContext, useState } from "react";
+import { useAuthMe } from "@/providers/auth/authMe";
+import { createContext, useContext, useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 
 interface User extends Omit<IUser, "password"> {}
 
@@ -12,6 +14,14 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export function UserProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | undefined>(undefined);
+
+  useEffect(() => {
+    const userData = localStorage.getItem("user");
+
+    if (userData) {
+      setUser(JSON.parse(userData));
+    }
+  }, []);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
